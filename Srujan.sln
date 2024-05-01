@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lexer", "Lexer\Lexer.csproj", "{B2C3D20A-29AA-4EF2-A046-FBBAD9CB9F27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Srujan.Lexer", "Srujan.Lexer\Srujan.Lexer.csproj", "{F81094F4-6AFB-43FD-8586-EB4FD9ED2E91}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2C3D20A-29AA-4EF2-A046-FBBAD9CB9F27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D20A-29AA-4EF2-A046-FBBAD9CB9F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D20A-29AA-4EF2-A046-FBBAD9CB9F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D20A-29AA-4EF2-A046-FBBAD9CB9F27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F81094F4-6AFB-43FD-8586-EB4FD9ED2E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F81094F4-6AFB-43FD-8586-EB4FD9ED2E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F81094F4-6AFB-43FD-8586-EB4FD9ED2E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F81094F4-6AFB-43FD-8586-EB4FD9ED2E91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD616F3B-B122-4872-AF12-7790D454BFBB}
+	EndGlobalSection
+EndGlobal
