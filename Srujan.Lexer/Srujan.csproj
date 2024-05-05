@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="ANTLR objects\" />
+    <Folder Include="Samples\" />
   </ItemGroup>
 
 </Project>

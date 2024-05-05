@@ -11,10 +11,17 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 try
     {
-        string text = "अंक प्रवेश () { एक: तार = \"अब सारे शब्द दिखाए जाएँगे \"; दिखाएँ एक ; }" + 0x1A;
+    string text;
+
+    //read the file
+    using (StreamReader sr = new StreamReader("C:\\Users\\plondhe\\Repos\\Srujan\\Srujan.Lexer\\Samples\\गुणा-भाग.सृ"))
+    {
+        text = sr.ReadToEnd();
+    }
+
     Console.OutputEncoding = System.Text.Encoding.UTF8;
     
-    Console.WriteLine("अंक प्रवेश () { एक: अक्षर = 'द'; दिखाएँ एक; }");
+    Console.WriteLine(text);
         LLVM.InitializeX86TargetInfo();
         LLVM.InitializeX86Target();
         LLVM.InitializeX86TargetMC();
@@ -42,7 +49,7 @@ try
         var data = LLVM.PrintModuleToString(module);
         var s = new string(data);
 
-        using (var fs = new FileStream("D:\\Games\\compiled_ir.ll", FileMode.OpenOrCreate))
+        using (var fs = new FileStream("./compiled_ir.ll", FileMode.OpenOrCreate))
         {
             fs.Write(Encoding.UTF8.GetBytes(s), 0, s.Length);
         }

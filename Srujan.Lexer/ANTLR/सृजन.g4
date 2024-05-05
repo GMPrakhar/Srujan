@@ -1,7 +1,7 @@
 grammar सृजन;
 
 // Define lexer rules
-TYPE        : 'अंक' | 'अक्षर' | 'तार';
+TYPE        : 'अंक' | 'अक्षर' | 'तार' | 'दशमलव';
 MAIN        : 'प्रवेश';
 IF          : 'अगर';
 THEN        : 'तो';
@@ -11,6 +11,7 @@ PRINT       : 'दिखाएँ';
 RETURN      : 'उत्तर';
 ID          : [ऀ-ॿ]+;
 INT         : [0-9]+;
+DECIMAL     : [0-9]+ '.' [0-9]+;
 CHAR        : '\''[0-9A-Za-zऀ-ॿ ]'\'';
 STRING      : '"'[0-9A-Za-zऀ-ॿ ]*'"';
 PLUS        : '+';
@@ -58,4 +59,5 @@ factor      : INT
             | CHAR
             | STRING
             | ID
+            | DECIMAL
             | LPAREN expression RPAREN;

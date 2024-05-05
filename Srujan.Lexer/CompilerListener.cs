@@ -22,6 +22,7 @@ namespace Srujan.Lexer
         {
             { LLVM.Int32Type(), "%d" },
             { LLVM.Int16Type(), "%c" },
+            { LLVM.DoubleType(), "%.3f" },
             { LLVM.PointerType(LLVM.Int16Type(), 0), "%s" },
 
         };
@@ -32,27 +33,117 @@ namespace Srujan.Lexer
             this.builder = LLVM.CreateBuilder();
         }
 
-        public override unsafe void EnterFactor([NotNull] FactorContext context)
+        LLVMValueRef EvaluateFactor(सृजनParser.FactorContext context)
         {
+            if (context.expression() != null)
+            {
+                return EvaluateExpression(context.expression());
+            }
+
+            if (context.ID() != null)
+            {
+                return variables[context.ID().GetText()].value;
+            }
+
+            if (context.INT() != null)
+            {
+                return LLVM.ConstInt(LLVM.Int32Type(), uint.Parse(context.INT().GetText()), 0);
+            }
+
+            if (context.CHAR() != null)
+            {
+                return LLVM.ConstInt(LLVM.Int16Type(), char.Parse(context.CHAR().GetText()), 0);
+            }
+
+            if(context.DECIMAL() != null)
+            {
+                return LLVM.ConstReal(LLVM.DoubleType(), double.Parse(context.DECIMAL().GetText()));
+            }
+
+            if (context.STRING() != null)
+            {
+                return LLVM.ConstString(context.STRING().GetText().Replace("\"", "").Replace("'", "").ToSBytePointer(), (uint)Encoding.UTF8.GetByteCount(context.STRING().GetText().Replace("\"", "").Replace("'","")), 0);
+            }
+
+            return null;
         }
 
+        private LLVMValueRef EvaluateTerm(TermContext termContext)
+        {
+            var allFactors = termContext.factor();
+            var firstFactor = allFactors[0];
+            LLVMValueRef left = EvaluateFactor(firstFactor);
+            LLVMValueRef finalValue = left;
+            for (int i = 1; i < allFactors.Length; i++)
+            {
+                var right = EvaluateFactor(allFactors[i]);
+
+                if (termContext.MULTIPLY()?.Length != 0)
+                {
+                    finalValue = LLVM.BuildMul(this.builder, left, right, "multmp".ToSBytePointer());
+                }
+                else
+                {
+                    if (left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    {
+                        finalValue = LLVM.BuildUDiv(this.builder, left, right, "divtmp".ToSBytePointer());
+                    }
+                    else
+                    {
+                        finalValue = LLVM.BuildFDiv(this.builder, left, right, "divtmp".ToSBytePointer());
+                    }
+                }
+
+                firstFactor = allFactors[i];
+                left = EvaluateFactor(firstFactor);
+            }
+
+            return finalValue;
+        }
+
+        private LLVMValueRef EvaluateExpression(ExpressionContext expressionContext)
+        {
+            var allTerms = expressionContext.term();
+            var firstTerm = allTerms[0];
+            LLVMValueRef left = EvaluateTerm(firstTerm);
+            LLVMValueRef finalValue = left;
+            for (int i = 1; i < allTerms.Length; i++)
+            {
+                var right = EvaluateTerm(allTerms[i]);
+
+                if (expressionContext.PLUS() != null)
+                {
+                    finalValue = LLVM.BuildAdd(this.builder, left, right, "addtmp".ToSBytePointer());
+                }
+                else
+                {
+                    finalValue = LLVM.BuildSub(this.builder, left, right, "subtmp".ToSBytePointer());
+                }
+
+                firstTerm = allTerms[i];
+                left = EvaluateTerm(firstTerm);
+            }
+
+            return finalValue;
+        }
+        
 
         public unsafe override void EnterVariableDeclaration([NotNull] सृजनParser.VariableDeclarationContext context)
         {
             string idString = context.ID().GetText();
             var sp = idString.ToSBytePointer();
-            var expression = context.expression().GetText().Replace("\"", "").Replace("'", "");
+            var value = EvaluateExpression(context.expression());
 
             LLVMTypeRef typeRef = LLVMTypeRef.Void;
-            LLVMValueRef value = LLVM.ConstNull(LLVMTypeRef.Int32);
 
             LLVMValueRef variable = value;
 
             switch (context.TYPE().GetText())
             {
-                case "अंक": typeRef = LLVM.Int32Type(); value = LLVM.ConstInt(LLVM.Int32Type(), uint.Parse(expression), 0); variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
-                case "अक्षर": typeRef = LLVM.Int16Type(); value = LLVM.ConstInt(LLVM.Int16Type(),  char.Parse(expression), 0); variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
-                case "तार": typeRef = LLVM.PointerType(LLVM.Int16Type(), 0); value = LLVM.ConstString(expression.ToSBytePointer(), (uint)Encoding.UTF8.GetByteCount(expression), 0); variable = LLVM.BuildArrayAlloca(this.builder, typeRef, value, sp); break;
+                case "अंक": typeRef = LLVM.Int32Type(); variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
+                case "अक्षर": typeRef = LLVM.Int16Type();variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
+                case "तार": typeRef = LLVM.PointerType(LLVM.Int16Type(), 0); variable = LLVM.BuildArrayAlloca(this.builder, typeRef, value, sp); break;
+                case "दशमलव": typeRef = LLVM.DoubleType(); variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
 
                     // Can be exended
             } 
@@ -63,19 +154,18 @@ namespace Srujan.Lexer
 
         public override unsafe void EnterPrintStatement([NotNull] सृजनParser.PrintStatementContext context)
         {
-            // Get the expression to print
-            var expressionText = context.expression().GetText();
-            var variableData = variables[expressionText];
+            var evaluatedExpression = EvaluateExpression(context.expression());
+            var valueType = evaluatedExpression.TypeOf;
 
             // Convert the pointer value to a string pointer using bitcast
             LLVMTypeRef stringPtrType = LLVM.PointerType(LLVM.Int8Type(), 0); // Assuming the pointer is to an i8*
-            LLVMOpaqueValue* stringPtr = LLVM.BuildGlobalStringPtr(this.builder, staticMappingForPrint[variableData.type].ToSBytePointer(), "stringParam".ToSBytePointer());
+            LLVMOpaqueValue* stringPtr = LLVM.BuildGlobalStringPtr(this.builder, staticMappingForPrint[valueType].ToSBytePointer(), "stringParam".ToSBytePointer());
 
-            LLVMOpaqueValue*[] values = { stringPtr, variableData.type.Kind == LLVMTypeKind.LLVMPointerTypeKind ? variableData.variable : variableData.value };
+            LLVMOpaqueValue*[] values = { stringPtr, evaluatedExpression};
 
             // Call printf function
             // Create LLVM IR function prototype for printf
-            LLVMOpaqueType*[] printfArgs = { stringPtrType, variableData.type };
+            LLVMOpaqueType*[] printfArgs = { stringPtrType, valueType };
 
             fixed(LLVMOpaqueType**  finalPrintArgs = &(printfArgs[0]))
             {
