@@ -62,6 +62,12 @@ public interface IसृजनVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitIfStatement([NotNull] सृजनParser.IfStatementContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.elseStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitElseStatement([NotNull] सृजनParser.ElseStatementContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="सृजनParser.whileLoop"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -79,6 +85,12 @@ public interface IसृजनVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitCondition([NotNull] सृजनParser.ConditionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.comparisionOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// </summary>

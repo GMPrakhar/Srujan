@@ -96,6 +96,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIfStatement([NotNull] सृजनParser.IfStatementContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.elseStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterElseStatement([NotNull] सृजनParser.ElseStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.elseStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitElseStatement([NotNull] सृजनParser.ElseStatementContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.whileLoop"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -131,6 +143,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitCondition([NotNull] सृजनParser.ConditionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.comparisionOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.comparisionOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>

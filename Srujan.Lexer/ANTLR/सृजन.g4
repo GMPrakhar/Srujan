@@ -11,9 +11,9 @@ PRINT       : 'दिखाएँ';
 RETURN      : 'उत्तर';
 ID          : [ऀ-ॿ]+;
 INT         : [0-9]+;
-DECIMAL     : [0-9]+ '.' [0-9]+;
-CHAR        : '\''[0-9A-Za-zऀ-ॿ ]'\'';
-STRING      : '"'[0-9A-Za-zऀ-ॿ ]*'"';
+DECIMAL     : INT('.' [0-9]+)?;
+CHAR        : '\''[\s ]'\'';
+STRING      : '"'[\s ]*'"';
 PLUS        : '+';
 MINUS       : '-';
 MULTIPLY    : '*';
@@ -39,25 +39,28 @@ variableDeclaration :  ID':' TYPE '=' expression SEMICOLON;
 
 assignment  : ID '=' expression SEMICOLON;
 
-ifStatement : IF condition '{' statement+ '}' (ELSE '{' statement+ '}')?;
+ifStatement : IF condition THEN '{' statement+ '}' (elseStatement)?;
+
+elseStatement : ELSE '{' statement+ '}';
 
 whileLoop   : WHILE condition '{' statement+ '}';
 
 printStatement : PRINT expression SEMICOLON;
 
-condition   : expression ( '<' | '>' | '==' | '!=' | '>=' | '<=' ) expression;
+condition   : expression comparisionOperator expression;
+
+comparisionOperator : '<' | '>' | '==' | '!=' | '>=' | '<=';
 
 expression  : term ((PLUS | MINUS) term)*;
-
 term        : factor ((MULTIPLY | DIVIDE) factor)*;
 
 function    : TYPE (functionName | MAIN) '(' (TYPE ID (',' TYPE ID)*)* ')' '{' statement+ ( RETURN statement )* '}';
 
 functionName : ID;
 
-factor      : INT
+factor      : LPAREN expression RPAREN
+            | INT
             | CHAR
             | STRING
             | ID
-            | DECIMAL
-            | LPAREN expression RPAREN;
+            | DECIMAL;

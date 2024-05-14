@@ -110,22 +110,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_program; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterProgram(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitProgram(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitProgram(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -187,22 +171,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_statement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -281,22 +249,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_variableDeclaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterVariableDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitVariableDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitVariableDeclaration(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -343,22 +295,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_assignment; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterAssignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitAssignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitAssignment(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -409,22 +345,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_ifStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterIfStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitIfStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitIfStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -495,22 +415,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_elseStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterElseStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitElseStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitElseStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -570,22 +474,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_whileLoop; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterWhileLoop(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitWhileLoop(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitWhileLoop(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -642,22 +530,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_printStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterPrintStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitPrintStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPrintStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -701,22 +573,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_condition; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterCondition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitCondition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitCondition(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -751,22 +607,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_comparisionOperator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterComparisionOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitComparisionOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitComparisionOperator(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -819,22 +659,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_expression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -903,22 +727,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_term; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterTerm(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitTerm(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitTerm(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -997,22 +805,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_function; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterFunction(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitFunction(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFunction(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1135,22 +927,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_functionName; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterFunctionName(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitFunctionName(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFunctionName(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -1191,22 +967,6 @@ public partial class सृजनParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_factor; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.EnterFactor(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IसृजनListener typedListener = listener as IसृजनListener;
-			if (typedListener != null) typedListener.ExitFactor(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFactor(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]

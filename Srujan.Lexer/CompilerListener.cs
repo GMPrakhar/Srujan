@@ -16,7 +16,7 @@ namespace Srujan.Lexer
     internal unsafe class CompilerListener : सृजनBaseListener
     {
         private LLVMModuleRef module;
-        private unsafe LLVMOpaqueBuilder* builder;
+        public unsafe LLVMOpaqueBuilder* builder;
         Dictionary<string, (LLVMTypeRef type, LLVMValueRef value, LLVMValueRef variable)> variables = new Dictionary<string, (LLVMTypeRef, LLVMValueRef, LLVMValueRef)>();
         Dictionary<LLVMTypeRef, string> staticMappingForPrint = new Dictionary<LLVMTypeRef, string>()
         {
@@ -42,7 +42,9 @@ namespace Srujan.Lexer
 
             if (context.ID() != null)
             {
-                return variables[context.ID().GetText()].value;
+                var variableContext = variables[context.ID().GetText()];
+                var tempStore = LLVM.BuildLoad2(builder, variableContext.type, variableContext.variable, "loadtmp".ToSBytePointer());
+                return tempStore;
             }
 
             if (context.INT() != null)
@@ -62,7 +64,8 @@ namespace Srujan.Lexer
 
             if (context.STRING() != null)
             {
-                return LLVM.ConstString(context.STRING().GetText().Replace("\"", "").Replace("'", "").ToSBytePointer(), (uint)Encoding.UTF8.GetByteCount(context.STRING().GetText().Replace("\"", "").Replace("'","")), 0);
+                var stringData = context.STRING().GetText().Replace("\"", "").Replace("'", "");
+                return LLVM.ConstString(stringData.ToSBytePointer(), (uint)Encoding.UTF8.GetByteCount(stringData), 0);
             }
 
             return null;
@@ -77,10 +80,29 @@ namespace Srujan.Lexer
             for (int i = 1; i < allFactors.Length; i++)
             {
                 var right = EvaluateFactor(allFactors[i]);
+                if (left.TypeOf == LLVM.DoubleType() || right.TypeOf == LLVM.DoubleType())
+                {
+                    var tmpVariable = LLVM.BuildAlloca(builder, LLVM.DoubleType(), "casttmp".ToSBytePointer());
+                    if (left.TypeOf == LLVM.Int32Type())
+                    {
+                        left = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(left));
+                    }
+                    if(right.TypeOf == LLVM.Int32Type())
+                    {
+                        right = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(right));
+                    }
+                }
 
                 if (termContext.MULTIPLY()?.Length != 0)
                 {
-                    finalValue = LLVM.BuildMul(this.builder, left, right, "multmp".ToSBytePointer());
+                    if(left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    {
+                        finalValue = LLVM.BuildMul(this.builder, left, right, "multmp".ToSBytePointer());
+                    }
+                    else
+                    {
+                        finalValue = LLVM.BuildFMul(this.builder, left, right, "multmp".ToSBytePointer());
+                    }
                 }
                 else
                 {
@@ -101,7 +123,7 @@ namespace Srujan.Lexer
             return finalValue;
         }
 
-        private LLVMValueRef EvaluateExpression(ExpressionContext expressionContext)
+        public LLVMValueRef EvaluateExpression(ExpressionContext expressionContext)
         {
             var allTerms = expressionContext.term();
             var firstTerm = allTerms[0];
@@ -110,14 +132,35 @@ namespace Srujan.Lexer
             for (int i = 1; i < allTerms.Length; i++)
             {
                 var right = EvaluateTerm(allTerms[i]);
-
-                if (expressionContext.PLUS() != null)
+                if (left.TypeOf == LLVM.DoubleType() || right.TypeOf == LLVM.DoubleType())
                 {
-                    finalValue = LLVM.BuildAdd(this.builder, left, right, "addtmp".ToSBytePointer());
+                    if (left.TypeOf == LLVM.Int32Type())
+                        left = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(left));
+                    if (right.TypeOf == LLVM.Int32Type())
+                        right = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(right));
+                }
+
+                if (expressionContext.PLUS()?.Length != 0)
+                {
+                    if(left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    {
+                        finalValue = LLVM.BuildAdd(this.builder, left, right, "addtmp".ToSBytePointer());
+                    }
+                    else
+                    {
+                        finalValue = LLVM.BuildFAdd(this.builder, left, right, "addtmp".ToSBytePointer());
+                    }
                 }
                 else
                 {
-                    finalValue = LLVM.BuildSub(this.builder, left, right, "subtmp".ToSBytePointer());
+                    if(left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    {
+                        finalValue = LLVM.BuildSub(this.builder, left, right, "subtmp".ToSBytePointer());
+                    }
+                    else
+                    {
+                        finalValue = LLVM.BuildFSub(this.builder, left, right, "subtmp".ToSBytePointer());
+                    }
                 }
 
                 firstTerm = allTerms[i];
@@ -126,7 +169,24 @@ namespace Srujan.Lexer
 
             return finalValue;
         }
-        
+
+        public unsafe override void EnterAssignment([NotNull] सृजनParser.AssignmentContext context)
+        {
+            string idString = context.ID().GetText();
+            var sp = idString.ToSBytePointer();
+            var value = EvaluateExpression(context.expression());
+            var variableContext = variables[idString];
+            var variable = variableContext.variable;
+
+            if (variableContext.type == LLVM.DoubleType() && value.TypeOf == LLVM.Int32Type())
+            {
+                value = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(value));
+            }
+
+            LLVM.BuildStore(this.builder, value, variable);
+            variables[idString] = (variables[idString].type, value, variable);
+        }
+
 
         public unsafe override void EnterVariableDeclaration([NotNull] सृजनParser.VariableDeclarationContext context)
         {
@@ -156,6 +216,13 @@ namespace Srujan.Lexer
         {
             var evaluatedExpression = EvaluateExpression(context.expression());
             var valueType = evaluatedExpression.TypeOf;
+
+            if(evaluatedExpression.IsConstantString)
+            {
+                valueType = LLVM.PointerType(LLVM.Int16Type(), 0);
+                // convert LLVM.ConstString to a pointer
+                evaluatedExpression = LLVM.BuildGlobalStringPtr(this.builder, evaluatedExpression.GetAsString(out _).ToSBytePointer(), "stringParam".ToSBytePointer());
+            }
 
             // Convert the pointer value to a string pointer using bitcast
             LLVMTypeRef stringPtrType = LLVM.PointerType(LLVM.Int8Type(), 0); // Assuming the pointer is to an i8*

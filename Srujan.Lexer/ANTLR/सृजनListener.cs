@@ -81,6 +81,16 @@ public interface IसृजनListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitIfStatement([NotNull] सृजनParser.IfStatementContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.elseStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterElseStatement([NotNull] सृजनParser.ElseStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.elseStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitElseStatement([NotNull] सृजनParser.ElseStatementContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.whileLoop"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -110,6 +120,16 @@ public interface IसृजनListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitCondition([NotNull] सृजनParser.ConditionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.comparisionOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.comparisionOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// </summary>
