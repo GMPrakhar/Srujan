@@ -80,7 +80,7 @@ namespace Srujan
 
 
                     // Option 2: Use LLVM's static compiler (llc) to generate object file
-                    LLVM.CreateObjectFile(module.WriteBitcodeToMemoryBuffer());
+                    LLVMObjectFileRef obj = LLVM.CreateObjectFile(module.WriteBitcodeToMemoryBuffer());
 
                     // and then link with a C/C++ compiler to create an executable
 

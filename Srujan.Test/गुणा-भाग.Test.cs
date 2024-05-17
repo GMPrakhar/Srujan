@@ -1,4 +1,6 @@
-﻿namespace Srujan.Test
+﻿using System.Diagnostics;
+
+namespace Srujan.Test
 {
     [TestClass]
     public class गुणाभागTest
@@ -7,24 +9,33 @@
         public void Test_Addition_Prints_Correct_Result()
         {
             // Arrange
-            var text = "अंक प्रवेश () { एक: दशमलव  = 1374783.8128; दो: दशमलव = 10.0; दिखाएँ एक / दो; }";
-            var expected = "10";
+            var fileName = "गुणाभाग.सृ";
+            var expected = "137478.381";
 
             // Get a stream that we can use writer and reader on
             var stream = new MemoryStream();
             var textWriter = new StreamWriter(stream);
 
             // Act
-            new CompileAndRun().CompileAndRunCode(text, textWriter);
+            Process process = new Process();
 
-            // read all text from memory stream
-            textWriter.Flush();
-            stream.Position = 0;
-            var reader = new StreamReader(stream);
-            var actual = reader.ReadToEnd();
+            // Configure the process using StartInfo
+            process.StartInfo.FileName = "cmd";
+            process.StartInfo.Arguments = $"/c Srujan.exe {fileName}";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+
+            // Start the process
+            process.Start();
+
+            // Read standard output synchronously
+            string output = process.StandardOutput.ReadToEnd();
+
+            // Wait for the process to exit
+            process.WaitForExit();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, output);
         }
     }
 }

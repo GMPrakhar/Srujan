@@ -16,13 +16,13 @@ namespace Srujan.Lexer
     internal unsafe class CompilerListener : सृजनBaseListener
     {
         private LLVMModuleRef module;
-        public unsafe LLVMOpaqueBuilder* builder;
+        public unsafe LLVMBuilderRef builder;
         Dictionary<string, (LLVMTypeRef type, LLVMValueRef value, LLVMValueRef variable)> variables = new Dictionary<string, (LLVMTypeRef, LLVMValueRef, LLVMValueRef)>();
         Dictionary<LLVMTypeRef, string> staticMappingForPrint = new Dictionary<LLVMTypeRef, string>()
         {
-            { LLVM.Int32Type(), "%d\n" },
-            { LLVM.Int16Type(), "%c\n" },
-            { LLVM.DoubleType(), "%.3f\n" },
+            { LLVM.Int32Type(), "%d" },
+            { LLVM.Int16Type(), "%c" },
+            { LLVM.DoubleType(), "%.3f" },
             { LLVM.PointerType(LLVM.Int16Type(), 0), "%s\n" },
 
         };
@@ -51,8 +51,12 @@ namespace Srujan.Lexer
             if (context.ID() != null)
             {
                 var variableContext = variables[context.ID().GetText()];
-                var tempStore = LLVM.BuildLoad2(builder, variableContext.type, variableContext.variable, "loadtmp".ToSBytePointer());
-                return tempStore;
+                if(variableContext.type.Kind == LLVMTypeKind.LLVMPointerTypeKind)
+                {
+                    return LLVM.BuildLoad2(builder, LLVM.PointerType(LLVM.Int16Type(), 0), variableContext.variable, "loadtmp".ToSBytePointer());
+                }
+
+                return LLVM.BuildLoad2(builder, variableContext.type, variableContext.variable, "loadtmp".ToSBytePointer());
             }
 
             if (context.INT() != null)
@@ -93,18 +97,7 @@ namespace Srujan.Lexer
             for (int i = 1; i < allFactors.Length; i++)
             {
                 var right = EvaluateFactor(allFactors[i]);
-                if (left.TypeOf == LLVM.DoubleType() || right.TypeOf == LLVM.DoubleType())
-                {
-                    var tmpVariable = LLVM.BuildAlloca(builder, LLVM.DoubleType(), "casttmp".ToSBytePointer());
-                    if (left.TypeOf == LLVM.Int32Type())
-                    {
-                        left = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(left));
-                    }
-                    if(right.TypeOf == LLVM.Int32Type())
-                    {
-                        right = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(right));
-                    }
-                }
+                UpcastToDecimalIfMismatch(ref left, ref right);
 
                 if (termContext.MULTIPLY()?.Length != 0)
                 {
@@ -145,17 +138,11 @@ namespace Srujan.Lexer
             for (int i = 1; i < allTerms.Length; i++)
             {
                 var right = EvaluateTerm(allTerms[i]);
-                if (left.TypeOf == LLVM.DoubleType() || right.TypeOf == LLVM.DoubleType())
-                {
-                    if (left.TypeOf == LLVM.Int32Type())
-                        left = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(left));
-                    if (right.TypeOf == LLVM.Int32Type())
-                        right = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(right));
-                }
+                UpcastToDecimalIfMismatch(ref left, ref right);
 
                 if (expressionContext.PLUS()?.Length != 0)
                 {
-                    if(left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    if (left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
                     {
                         finalValue = LLVM.BuildAdd(this.builder, left, right, "addtmp".ToSBytePointer());
                     }
@@ -166,7 +153,7 @@ namespace Srujan.Lexer
                 }
                 else
                 {
-                    if(left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    if (left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
                     {
                         finalValue = LLVM.BuildSub(this.builder, left, right, "subtmp".ToSBytePointer());
                     }
@@ -181,6 +168,17 @@ namespace Srujan.Lexer
             }
 
             return finalValue;
+        }
+
+        private static void UpcastToDecimalIfMismatch(ref LLVMValueRef left, ref LLVMValueRef right)
+        {
+            if (left.TypeOf == LLVM.DoubleType() || right.TypeOf == LLVM.DoubleType())
+            {
+                if (left.TypeOf == LLVM.Int32Type())
+                    left = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(left));
+                if (right.TypeOf == LLVM.Int32Type())
+                    right = LLVM.ConstReal(LLVM.DoubleType(), LLVM.ConstIntGetSExtValue(right));
+            }
         }
 
         public unsafe override void EnterAssignment([NotNull] सृजनParser.AssignmentContext context)
@@ -206,22 +204,27 @@ namespace Srujan.Lexer
             string idString = context.ID().GetText();
             var sp = idString.ToSBytePointer();
             var value = EvaluateExpression(context.expression());
+            var elementType = context.TYPE().GetText();
 
-            LLVMTypeRef typeRef = LLVMTypeRef.Void;
+            LLVMTypeRef typeRef = stringTypeToLLVMType[elementType];
 
-            LLVMValueRef variable = value;
+            LLVMValueRef variable;
 
-            switch (context.TYPE().GetText())
+            if (typeRef != value.TypeOf && typeRef.Kind != LLVMTypeKind.LLVMPointerTypeKind)
             {
-                case "अंक": typeRef = LLVM.Int32Type(); variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
-                case "अक्षर": typeRef = LLVM.Int16Type();variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
-                case "तार": typeRef = LLVM.PointerType(LLVM.Int16Type(), 0); variable = LLVM.BuildArrayAlloca(this.builder, typeRef, value, sp); break;
-                case "दशमलव": typeRef = LLVM.DoubleType(); variable = LLVM.BuildAlloca(this.builder, typeRef, sp); break;
+                throw new InvalidOperationException($"Value of type {value.TypeOf} is not assignable to {elementType}.");
+            }
 
-                    // Can be exended
-            } 
+            if (typeRef.Kind == LLVMTypeKind.LLVMPointerTypeKind)
+            {
+                variable = LLVM.BuildArrayAlloca(this.builder, typeRef, value, sp);
+            }
+            else
+            {
+                variable = LLVM.BuildAlloca(this.builder, typeRef, sp);
+                LLVM.BuildStore(this.builder, value, variable);
+            }
 
-            LLVM.BuildStore(this.builder, value, variable);
             variables.Add(idString, (typeRef, value, variable));
         }
 
