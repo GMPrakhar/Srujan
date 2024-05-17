@@ -4,7 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 string fileName;
 if (args.Length == 0)
 {
-    fileName = "C:\\Users\\plondhe\\Repos\\Srujan\\Srujan.Lexer\\Samples\\गुणा-भाग.सृ";
+    fileName = "C:\\Users\\plondhe\\Repos\\Srujan\\Srujan.Lexer\\Samples\\पिंगाला.सृ";
 }
 else
 {

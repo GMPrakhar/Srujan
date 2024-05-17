@@ -89,12 +89,26 @@ namespace Srujan
             LLVM.BuildCondBr(builder, condition, thenBlock, elseBlock);
 
             LLVM.PositionBuilderAtEnd(builder, thenBlock);
+
+            bool breakStatementFound = false;
             // Generate code for then block
             foreach (var statement in context.statement())
             {
+                if(statement.breakStatement() != null)
+                {
+                    var loop = this.GetPreviousLoopBlock(LLVM.GetInsertBlock(builder));
+                    LLVM.BuildBr(builder, loop);
+                    breakStatementFound = true;
+                    break;
+                }
+
                 this.parentWalker.Walk(this.listener, statement);
             }
-            LLVM.BuildBr(builder, mergeBlock);
+
+            if (!breakStatementFound)
+            {
+                LLVM.BuildBr(builder, mergeBlock);
+            }
 
             LLVM.PositionBuilderAtEnd(builder, elseBlock);
 
@@ -110,6 +124,26 @@ namespace Srujan
             LLVM.BuildBr(builder, mergeBlock);
 
             LLVM.PositionBuilderAtEnd(builder, mergeBlock);
+        }
+
+        private LLVMBasicBlockRef GetPreviousLoopBlock(LLVMBasicBlockRef currentBlock)
+        {
+            // loop through parent blocks to find the loop block
+            LLVMOpaqueBasicBlock* parentBlock = LLVM.GetPreviousBasicBlock(currentBlock);
+            while (parentBlock != null)
+            {
+                var blockname = LLVM.GetBasicBlockName(parentBlock);
+                // convert sbyte* to string
+                var blockNameString = new string((sbyte*)blockname);
+                if (blockNameString.Contains("afterLoop"))
+                {
+                    return parentBlock;
+                }
+
+                parentBlock = LLVM.GetPreviousBasicBlock(parentBlock);
+            }
+
+            throw new InvalidOperationException("break statement must be used inside a loop.");
         }
     }
 }

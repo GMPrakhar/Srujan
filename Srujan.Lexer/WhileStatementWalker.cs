@@ -93,6 +93,15 @@ namespace Srujan
 
             foreach(var statement in context.statement())
             {
+                if(statement.breakStatement() != null)
+                {
+                    LLVM.BuildBr(builder, after);
+
+                    LLVM.PositionBuilderAtEnd(builder, after);
+                    // No need to walk further as we are breaking out of the loop
+                    return;
+                }
+
                 this.parentWalker.Walk(this.listener, statement);
             }
 

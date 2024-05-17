@@ -20,11 +20,19 @@ namespace Srujan.Lexer
         Dictionary<string, (LLVMTypeRef type, LLVMValueRef value, LLVMValueRef variable)> variables = new Dictionary<string, (LLVMTypeRef, LLVMValueRef, LLVMValueRef)>();
         Dictionary<LLVMTypeRef, string> staticMappingForPrint = new Dictionary<LLVMTypeRef, string>()
         {
-            { LLVM.Int32Type(), "%d" },
-            { LLVM.Int16Type(), "%c" },
-            { LLVM.DoubleType(), "%.3f" },
-            { LLVM.PointerType(LLVM.Int16Type(), 0), "%s" },
+            { LLVM.Int32Type(), "%d\n" },
+            { LLVM.Int16Type(), "%c\n" },
+            { LLVM.DoubleType(), "%.3f\n" },
+            { LLVM.PointerType(LLVM.Int16Type(), 0), "%s\n" },
 
+        };
+
+        IDictionary<string, LLVMTypeRef> stringTypeToLLVMType = new Dictionary<string, LLVMTypeRef>()
+        {
+            { "अंक", LLVM.Int32Type() },
+            { "अक्षर", LLVM.Int16Type() },
+            { "तार", LLVM.PointerType(LLVM.Int16Type(), 0) },
+            { "दशमलव", LLVM.DoubleType() }
         };
 
         public unsafe CompilerListener(LLVMModuleRef moduleRef)
@@ -66,6 +74,11 @@ namespace Srujan.Lexer
             {
                 var stringData = context.STRING().GetText().Replace("\"", "").Replace("'", "");
                 return LLVM.ConstString(stringData.ToSBytePointer(), (uint)Encoding.UTF8.GetByteCount(stringData), 0);
+            }
+
+            if (context.arrayAccess() != null)
+            {
+                return GetArrayElement(context.arrayAccess());
             }
 
             return null;
@@ -210,6 +223,112 @@ namespace Srujan.Lexer
 
             LLVM.BuildStore(this.builder, value, variable);
             variables.Add(idString, (typeRef, value, variable));
+        }
+
+        public override unsafe void EnterArrayDeclaration([NotNull] ArrayDeclarationContext context)
+        {
+            string idString = context.ID().GetText();
+            var sp = idString.ToSBytePointer();
+            var arrayType = context.TYPE();
+
+            var elementTypeValue = stringTypeToLLVMType[arrayType.GetText()];
+
+            var arraySize = EvaluateExpression(context.expression());
+
+            if(arraySize.TypeOf != LLVM.Int32Type())
+            {
+                throw new InvalidOperationException("Array size must be an integer");
+            }
+
+            long arraySizeValue = LLVM.ConstIntGetSExtValue(arraySize);
+            var arrayTypeValue = LLVM.ArrayType(elementTypeValue, (uint)arraySizeValue);
+
+            if (arraySizeValue <= 0)
+            {
+                throw new InvalidOperationException("Array size must be greater than 0");
+            }
+
+            var variable = LLVM.BuildArrayAlloca(builder, arrayTypeValue, null, sp);
+            variables.Add(idString, (arrayTypeValue, null, variable));
+        }
+
+        public override unsafe void EnterArrayInitialization([NotNull] ArrayInitializationContext context)
+        {
+            string idString = context.ID().GetText();
+            var sp = idString.ToSBytePointer();
+            var arrayTypeValue = variables[idString].type;
+            var elementTypeValue = arrayTypeValue.ElementType;
+
+            var expressions = context.expression();
+            for (int i = 0; i < expressions.Length; i++)
+            {
+                var assignmentValue = EvaluateExpression(expressions[i]);
+                if (assignmentValue.TypeOf != elementTypeValue)
+                {
+                    throw new InvalidOperationException("Array initialization value must be of the same type as the array");
+                }
+
+                var indices = new LLVMOpaqueValue*[] { LLVM.ConstInt(LLVM.Int32Type(), (uint)i, 0) };
+
+                fixed (LLVMOpaqueValue** indicesPointer = &(indices[0]))
+                {
+                    var variablePointer = variables[idString].variable;
+                    var variable = LLVM.BuildGEP2(builder, arrayTypeValue, variablePointer, indicesPointer, 1, sp);
+                    var store = LLVM.BuildStore(builder, assignmentValue, variable);
+                }
+            }
+        }
+
+        public override unsafe void EnterArrayAssignment([NotNull] ArrayAssignmentContext context)
+        {
+            string idString = context.ID().GetText();
+            var sp = idString.ToSBytePointer();
+            var expressions = context.expression();
+            var index = EvaluateExpression(expressions[0]);
+
+            var assignmentValue = EvaluateExpression(expressions[1]);
+
+            if (index.TypeOf != LLVM.Int32Type())
+            {
+                throw new InvalidOperationException("Array index must be an integer");
+            }
+
+            // store value in array
+            var variableContext = variables[idString];
+            var arrayTypeValue = variableContext.type;
+            var variablePointer = variableContext.variable;
+
+            var indices = new LLVMOpaqueValue*[] { index };
+
+            fixed (LLVMOpaqueValue** indicesPointer = &(indices[0]))
+            {
+                var variable = LLVM.BuildGEP2(builder, arrayTypeValue, variablePointer, indicesPointer, 1, sp);
+                var store = LLVM.BuildStore(builder, assignmentValue, variable);
+            }
+        }
+
+        private LLVMOpaqueValue* GetArrayElement(ArrayAccessContext context)
+        {
+            string idString = context.ID().GetText();
+            var sp = idString.ToSBytePointer();
+            var index = EvaluateExpression(context.expression());
+
+            if (index.TypeOf != LLVM.Int32Type())
+            {
+                throw new InvalidOperationException("Array index must be an integer");
+            }
+
+            var variableContext = variables[idString];
+            var arrayTypeValue = variableContext.type;
+            var variablePointer = variableContext.variable;
+
+            var indices = new LLVMOpaqueValue*[] { index };
+
+            fixed (LLVMOpaqueValue** indicesPointer = &(indices[0]))
+            {
+                var variable = LLVM.BuildGEP2(builder, arrayTypeValue, variablePointer, indicesPointer, 1, sp);
+                return LLVM.BuildLoad2(builder, arrayTypeValue.ElementType, variable, "loadtmp".ToSBytePointer());
+            }
         }
 
         public override unsafe void EnterPrintStatement([NotNull] सृजनParser.PrintStatementContext context)

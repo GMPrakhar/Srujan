@@ -2,7 +2,6 @@ grammar सृजन;
 
 // Define lexer rules
 TYPE        : 'अंक' | 'अक्षर' | 'तार' | 'दशमलव';
-BREAK       : 'विराम';
 MAIN        : 'प्रवेश';
 IF          : 'अगर';
 THEN        : 'तो';
@@ -10,11 +9,12 @@ ELSE        : 'या';
 WHILE       : 'जबतक';
 PRINT       : 'दिखाएँ';
 RETURN      : 'उत्तर';
-ID          : [ऀ-ॿ_]+;
+ID          : [ऀ-ॿ]+;
 INT         : [0-9]+;
+BREAK       : 'विराम';
 DECIMAL     : INT('.' [0-9]+)?;
-CHAR        : '\''.'\'';
-STRING      : '"'.*?'"';
+CHAR        : '\''[\s ]'\'';
+STRING      : '"'[\s ]*'"';
 PLUS        : '+';
 MINUS       : '-';
 MULTIPLY    : '*';
