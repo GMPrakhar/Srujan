@@ -53,6 +53,14 @@ namespace Srujan.Lexer
                 var variableContext = variables[context.ID().GetText()];
                 if(variableContext.type.Kind == LLVMTypeKind.LLVMPointerTypeKind)
                 {
+                    // the variable is a string variable, load using getelementptr in bounds
+
+                    var indices = new LLVMOpaqueValue*[] { LLVM.ConstInt(LLVM.Int32Type(), (uint)0, 0) };
+
+                    fixed (LLVMOpaqueValue** indicesPointer = &(indices[0]))
+                    {
+                        var variable = LLVM.BuildGEP2(builder, variableContext.type, variableContext.variable, indicesPointer, 0, sp);
+                    }
                     return LLVM.BuildLoad2(builder, LLVM.PointerType(LLVM.Int16Type(), 0), variableContext.variable, "loadtmp".ToSBytePointer());
                 }
 
@@ -203,14 +211,19 @@ namespace Srujan.Lexer
         {
             string idString = context.ID().GetText();
             var sp = idString.ToSBytePointer();
-            var value = EvaluateExpression(context.expression());
+            LLVMValueRef value = null;
+            if (context.expression() != null)
+            {
+                value = EvaluateExpression(context.expression());
+            }
+
             var elementType = context.TYPE().GetText();
 
             LLVMTypeRef typeRef = stringTypeToLLVMType[elementType];
 
             LLVMValueRef variable;
 
-            if (typeRef != value.TypeOf && typeRef.Kind != LLVMTypeKind.LLVMPointerTypeKind)
+            if (value != null && typeRef != value.TypeOf && typeRef.Kind != LLVMTypeKind.LLVMPointerTypeKind)
             {
                 throw new InvalidOperationException($"Value of type {value.TypeOf} is not assignable to {elementType}.");
             }
@@ -222,7 +235,10 @@ namespace Srujan.Lexer
             else
             {
                 variable = LLVM.BuildAlloca(this.builder, typeRef, sp);
-                LLVM.BuildStore(this.builder, value, variable);
+                if (value != null)
+                {
+                    LLVM.BuildStore(this.builder, value, variable);
+                }
             }
 
             variables.Add(idString, (typeRef, value, variable));
@@ -334,21 +350,54 @@ namespace Srujan.Lexer
             }
         }
 
+        public override unsafe void EnterInputStatement([NotNull] InputStatementContext context)
+        {
+            // Generate code
+            var idString = context.ID().GetText();
+            var variableContext = variables[idString];
+            var variable = variableContext.variable;
+            var type = variableContext.type;
+
+            // use scanf to read input
+            LLVMOpaqueValue* stringPtr = LLVM.BuildGlobalStringPtr(this.builder, staticMappingForPrint[type].ToSBytePointer(), "stringParam".ToSBytePointer());
+            LLVMOpaqueValue*[] values = { stringPtr, variable };
+
+            // Create LLVM IR function prototype for scanf
+            LLVMOpaqueType*[] scanfArgs = { LLVM.PointerType(LLVM.Int8Type(), 0), LLVM.PointerType(type, 0) };
+
+            fixed (LLVMOpaqueType** finalScanfArgs = &(scanfArgs[0]))
+            {
+                LLVMTypeRef scanfType = LLVM.FunctionType(LLVM.Int32Type(), finalScanfArgs, 2, 1);
+                LLVMValueRef scanfFunction = module.GetNamedFunction("scanf");
+
+                if (scanfFunction.Handle == IntPtr.Zero)
+                {
+                    scanfFunction = LLVM.AddFunction(this.module, "scanf".ToSBytePointer(), scanfType);
+                }
+
+                fixed (LLVMOpaqueValue** finalScanfParams = &(values[0]))
+                {
+                    LLVM.BuildCall2(this.builder, scanfType, scanfFunction, finalScanfParams, 2, "scanfCall".ToSBytePointer());
+                }
+            }
+        }
+
         public override unsafe void EnterPrintStatement([NotNull] सृजनParser.PrintStatementContext context)
         {
             var evaluatedExpression = EvaluateExpression(context.expression());
+            var newline = context.NEWLINE() != null ? "\n" : null;
             var valueType = evaluatedExpression.TypeOf;
 
             if(evaluatedExpression.IsConstantString)
             {
                 valueType = LLVM.PointerType(LLVM.Int16Type(), 0);
                 // convert LLVM.ConstString to a pointer
-                evaluatedExpression = LLVM.BuildGlobalStringPtr(this.builder, evaluatedExpression.GetAsString(out _).ToSBytePointer(), "stringParam".ToSBytePointer());
+                evaluatedExpression = LLVM.BuildGlobalStringPtr(this.builder, (evaluatedExpression.GetAsString(out _)+newline).ToSBytePointer(), "stringParam".ToSBytePointer());
             }
 
             // Convert the pointer value to a string pointer using bitcast
             LLVMTypeRef stringPtrType = LLVM.PointerType(LLVM.Int8Type(), 0); // Assuming the pointer is to an i8*
-            LLVMOpaqueValue* stringPtr = LLVM.BuildGlobalStringPtr(this.builder, staticMappingForPrint[valueType].ToSBytePointer(), "stringParam".ToSBytePointer());
+            LLVMOpaqueValue* stringPtr = LLVM.BuildGlobalStringPtr(this.builder, (staticMappingForPrint[valueType]+newline).ToSBytePointer(), "stringParam".ToSBytePointer());
 
             LLVMOpaqueValue*[] values = { stringPtr, evaluatedExpression};
 
@@ -376,9 +425,9 @@ namespace Srujan.Lexer
         public override unsafe void EnterFunction([NotNull] सृजनParser.FunctionContext context)
         {
             // Get function name and return type
-            string functionName = context.MAIN()?.GetText() ?? context.functionName().GetText();
+            string functionName = context.MAIN()?.GetText() != null ? "main" : context.functionName().GetText();
 
-            LLVMTypeRef returnType = LLVM.VoidType(); // Assuming the return type is int for simplicity
+            LLVMTypeRef returnType = LLVM.Int32Type(); // Assuming the return type is int for simplicity
 
             // Create function type
             LLVMTypeRef functionType = LLVM.FunctionType(returnType, null, 0, 0);
@@ -399,8 +448,7 @@ namespace Srujan.Lexer
 
         public override unsafe void ExitFunction([NotNull] सृजनParser.FunctionContext context)
         {
-            LLVM.BuildRetVoid(builder);
-
+            LLVM.BuildRet(builder, LLVM.ConstInt(LLVM.Int32Type(), 0, 0));
         }
     }
 }

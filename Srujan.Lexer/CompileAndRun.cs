@@ -24,7 +24,7 @@ namespace Srujan
 {
     public class CompileAndRun
     {
-        public void CompileAndRunCode(string text, TextWriter? outputWriter = null)
+        public void CompileAndRunCode(string text, bool justCompile, TextWriter? outputWriter = null)
         {
             try
             {
@@ -46,7 +46,6 @@ namespace Srujan
                 IParseTree tree = speakParser.program();
                 LLVMModuleRef module;
                 LLVMTargetMachineRef targetMachine;
-                LLVMCodeGenFileType codeGenFileType = LLVMCodeGenFileType.LLVMObjectFile;
                 unsafe
                 {
 
@@ -62,9 +61,14 @@ namespace Srujan
                     var data = LLVM.PrintModuleToString(module);
                     var s = new string(data);
 
-                    using (var fs = new FileStream("C:\\users\\plondhe\\Documents\\compiled_ir.ll", FileMode.OpenOrCreate))
+                    using (var fs = new FileStream("compiled_ir.ll", FileMode.OpenOrCreate))
                     {
                         fs.Write(Encoding.UTF8.GetBytes(s), 0, s.Length);
+                    }
+
+                    if(justCompile)
+                    {
+                        return;
                     }
 
                     // Compile LLVM IR into machine code
@@ -86,7 +90,7 @@ namespace Srujan
 
                     // Run the executable
 
-                    engine.RunFunction(module.GetNamedFunction("प्रवेश"), []);
+                    engine.RunFunction(module.GetNamedFunction("main"), []);
 
                     // Dispose LLVM module
                     LLVM.DisposeModule(module);

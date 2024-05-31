@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:/Users/plondhe/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
+// Generated from d:/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -38,22 +38,22 @@ public partial class सृजनParser : Parser {
 	public const int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, TYPE=13, BREAK=14, MAIN=15, IF=16, THEN=17, 
-		ELSE=18, WHILE=19, PRINT=20, RETURN=21, ID=22, INT=23, DECIMAL=24, CHAR=25, 
-		STRING=26, PLUS=27, MINUS=28, MULTIPLY=29, DIVIDE=30, EQUALS=31, LPAREN=32, 
-		RPAREN=33, SEMICOLON=34, WS=35;
+		ELSE=18, WHILE=19, PRINT=20, NEWLINE=21, SCAN=22, RETURN=23, ID=24, INT=25, 
+		DECIMAL=26, CHAR=27, STRING=28, PLUS=29, MINUS=30, MULTIPLY=31, DIVIDE=32, 
+		EQUALS=33, LPAREN=34, RPAREN=35, SEMICOLON=36, COMMENT=37, WS=38;
 	public const int
-		RULE_program = 0, RULE_statement = 1, RULE_breakStatement = 2, RULE_arrayDeclaration = 3, 
-		RULE_arrayAssignment = 4, RULE_arrayAccess = 5, RULE_arrayInitialization = 6, 
-		RULE_variableDeclaration = 7, RULE_assignment = 8, RULE_ifStatement = 9, 
-		RULE_elseStatement = 10, RULE_whileLoop = 11, RULE_printStatement = 12, 
-		RULE_condition = 13, RULE_comparisionOperator = 14, RULE_expression = 15, 
-		RULE_term = 16, RULE_function = 17, RULE_functionName = 18, RULE_factor = 19;
+		RULE_program = 0, RULE_statement = 1, RULE_inputStatement = 2, RULE_breakStatement = 3, 
+		RULE_arrayDeclaration = 4, RULE_arrayAssignment = 5, RULE_arrayAccess = 6, 
+		RULE_arrayInitialization = 7, RULE_variableDeclaration = 8, RULE_assignment = 9, 
+		RULE_ifStatement = 10, RULE_elseStatement = 11, RULE_whileLoop = 12, RULE_printStatement = 13, 
+		RULE_condition = 14, RULE_comparisionOperator = 15, RULE_expression = 16, 
+		RULE_term = 17, RULE_function = 18, RULE_functionName = 19, RULE_factor = 20;
 	public static readonly string[] ruleNames = {
-		"program", "statement", "breakStatement", "arrayDeclaration", "arrayAssignment", 
-		"arrayAccess", "arrayInitialization", "variableDeclaration", "assignment", 
-		"ifStatement", "elseStatement", "whileLoop", "printStatement", "condition", 
-		"comparisionOperator", "expression", "term", "function", "functionName", 
-		"factor"
+		"program", "statement", "inputStatement", "breakStatement", "arrayDeclaration", 
+		"arrayAssignment", "arrayAccess", "arrayInitialization", "variableDeclaration", 
+		"assignment", "ifStatement", "elseStatement", "whileLoop", "printStatement", 
+		"condition", "comparisionOperator", "expression", "term", "function", 
+		"functionName", "factor"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -61,15 +61,17 @@ public partial class सृजनParser : Parser {
 		"'!='", "'>='", "'<='", null, "'\\u0935\\u093F\\u0930\\u093E\\u092E'", 
 		"'\\u092A\\u094D\\u0930\\u0935\\u0947\\u0936'", "'\\u0905\\u0917\\u0930'", 
 		"'\\u0924\\u094B'", "'\\u092F\\u093E'", "'\\u091C\\u092C\\u0924\\u0915'", 
-		"'\\u0926\\u093F\\u0916\\u093E\\u090F\\u0901'", "'\\u0909\\u0924\\u094D\\u0924\\u0930'", 
-		null, null, null, null, null, "'+'", "'-'", "'*'", "'/'", "'='", "'('", 
-		"')'", "';'"
+		"'\\u0926\\u093F\\u0916\\u093E\\u090F\\u0901'", "'\\u092A\\u0902\\u0915\\u094D\\u0924\\u093F'", 
+		"'\\u0938\\u094D\\u0935\\u0940\\u0915\\u093E\\u0930 \\u0915\\u0930\\u0947\\u0902'", 
+		"'\\u0909\\u0924\\u094D\\u0924\\u0930'", null, null, null, null, null, 
+		"'+'", "'-'", "'*'", "'/'", "'='", "'('", "')'", "';'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, "TYPE", "BREAK", "MAIN", "IF", "THEN", "ELSE", "WHILE", "PRINT", 
-		"RETURN", "ID", "INT", "DECIMAL", "CHAR", "STRING", "PLUS", "MINUS", "MULTIPLY", 
-		"DIVIDE", "EQUALS", "LPAREN", "RPAREN", "SEMICOLON", "WS"
+		"NEWLINE", "SCAN", "RETURN", "ID", "INT", "DECIMAL", "CHAR", "STRING", 
+		"PLUS", "MINUS", "MULTIPLY", "DIVIDE", "EQUALS", "LPAREN", "RPAREN", "SEMICOLON", 
+		"COMMENT", "WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -125,12 +127,6 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitProgram(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitProgram(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -141,20 +137,20 @@ public partial class सृजनParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 41;
+			State = 43;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 40;
+				State = 42;
 				statement();
 				}
 				}
-				State = 43;
+				State = 45;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5857280L) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 22634496L) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -199,6 +195,9 @@ public partial class सृजनParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ArrayInitializationContext arrayInitialization() {
 			return GetRuleContext<ArrayInitializationContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public InputStatementContext inputStatement() {
+			return GetRuleContext<InputStatementContext>(0);
+		}
 		public StatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -214,12 +213,6 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitStatement(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
@@ -227,79 +220,133 @@ public partial class सृजनParser : Parser {
 		StatementContext _localctx = new StatementContext(Context, State);
 		EnterRule(_localctx, 2, RULE_statement);
 		try {
-			State = 55;
+			State = 58;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 45;
+				State = 47;
 				variableDeclaration();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 46;
+				State = 48;
 				assignment();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 47;
+				State = 49;
 				ifStatement();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 48;
+				State = 50;
 				whileLoop();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 49;
+				State = 51;
 				printStatement();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 50;
+				State = 52;
 				function();
 				}
 				break;
 			case 7:
 				EnterOuterAlt(_localctx, 7);
 				{
-				State = 51;
+				State = 53;
 				breakStatement();
 				}
 				break;
 			case 8:
 				EnterOuterAlt(_localctx, 8);
 				{
-				State = 52;
+				State = 54;
 				arrayDeclaration();
 				}
 				break;
 			case 9:
 				EnterOuterAlt(_localctx, 9);
 				{
-				State = 53;
+				State = 55;
 				arrayAssignment();
 				}
 				break;
 			case 10:
 				EnterOuterAlt(_localctx, 10);
 				{
-				State = 54;
+				State = 56;
 				arrayInitialization();
 				}
 				break;
+			case 11:
+				EnterOuterAlt(_localctx, 11);
+				{
+				State = 57;
+				inputStatement();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class InputStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SCAN() { return GetToken(सृजनParser.SCAN, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(सृजनParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(सृजनParser.SEMICOLON, 0); }
+		public InputStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_inputStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IसृजनListener typedListener = listener as IसृजनListener;
+			if (typedListener != null) typedListener.EnterInputStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IसृजनListener typedListener = listener as IसृजनListener;
+			if (typedListener != null) typedListener.ExitInputStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public InputStatementContext inputStatement() {
+		InputStatementContext _localctx = new InputStatementContext(Context, State);
+		EnterRule(_localctx, 4, RULE_inputStatement);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 60;
+			Match(SCAN);
+			State = 61;
+			Match(ID);
+			State = 62;
+			Match(SEMICOLON);
 			}
 		}
 		catch (RecognitionException re) {
@@ -331,24 +378,18 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitBreakStatement(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitBreakStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public BreakStatementContext breakStatement() {
 		BreakStatementContext _localctx = new BreakStatementContext(Context, State);
-		EnterRule(_localctx, 4, RULE_breakStatement);
+		EnterRule(_localctx, 6, RULE_breakStatement);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 57;
+			State = 64;
 			Match(BREAK);
-			State = 58;
+			State = 65;
 			Match(SEMICOLON);
 			}
 		}
@@ -385,34 +426,28 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitArrayDeclaration(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitArrayDeclaration(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ArrayDeclarationContext arrayDeclaration() {
 		ArrayDeclarationContext _localctx = new ArrayDeclarationContext(Context, State);
-		EnterRule(_localctx, 6, RULE_arrayDeclaration);
+		EnterRule(_localctx, 8, RULE_arrayDeclaration);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 60;
+			State = 67;
 			Match(ID);
-			State = 61;
+			State = 68;
 			Match(T__0);
-			State = 62;
+			State = 69;
 			Match(TYPE);
-			State = 63;
+			State = 70;
 			Match(T__1);
-			State = 64;
+			State = 71;
 			expression();
-			State = 65;
+			State = 72;
 			Match(T__2);
-			State = 66;
+			State = 73;
 			Match(SEMICOLON);
 			}
 		}
@@ -452,34 +487,28 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitArrayAssignment(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitArrayAssignment(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ArrayAssignmentContext arrayAssignment() {
 		ArrayAssignmentContext _localctx = new ArrayAssignmentContext(Context, State);
-		EnterRule(_localctx, 8, RULE_arrayAssignment);
+		EnterRule(_localctx, 10, RULE_arrayAssignment);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 68;
+			State = 75;
 			Match(ID);
-			State = 69;
+			State = 76;
 			Match(T__1);
-			State = 70;
+			State = 77;
 			expression();
-			State = 71;
+			State = 78;
 			Match(T__2);
-			State = 72;
+			State = 79;
 			Match(EQUALS);
-			State = 73;
+			State = 80;
 			expression();
-			State = 74;
+			State = 81;
 			Match(SEMICOLON);
 			}
 		}
@@ -514,28 +543,22 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitArrayAccess(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitArrayAccess(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ArrayAccessContext arrayAccess() {
 		ArrayAccessContext _localctx = new ArrayAccessContext(Context, State);
-		EnterRule(_localctx, 10, RULE_arrayAccess);
+		EnterRule(_localctx, 12, RULE_arrayAccess);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 76;
+			State = 83;
 			Match(ID);
-			State = 77;
+			State = 84;
 			Match(T__1);
-			State = 78;
+			State = 85;
 			expression();
-			State = 79;
+			State = 86;
 			Match(T__2);
 			}
 		}
@@ -575,57 +598,51 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitArrayInitialization(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitArrayInitialization(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ArrayInitializationContext arrayInitialization() {
 		ArrayInitializationContext _localctx = new ArrayInitializationContext(Context, State);
-		EnterRule(_localctx, 12, RULE_arrayInitialization);
+		EnterRule(_localctx, 14, RULE_arrayInitialization);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 81;
+			State = 88;
 			Match(ID);
-			State = 82;
+			State = 89;
 			Match(EQUALS);
-			State = 83;
+			State = 90;
 			Match(T__3);
-			State = 92;
+			State = 99;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4424990720L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 17699962880L) != 0)) {
 				{
-				State = 84;
+				State = 91;
 				expression();
-				State = 89;
+				State = 96;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==T__4) {
 					{
 					{
-					State = 85;
+					State = 92;
 					Match(T__4);
-					State = 86;
+					State = 93;
 					expression();
 					}
 					}
-					State = 91;
+					State = 98;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
 				}
 			}
 
-			State = 94;
+			State = 101;
 			Match(T__5);
-			State = 95;
+			State = 102;
 			Match(SEMICOLON);
 			}
 		}
@@ -643,11 +660,11 @@ public partial class सृजनParser : Parser {
 	public partial class VariableDeclarationContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(सृजनParser.ID, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TYPE() { return GetToken(सृजनParser.TYPE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(सृजनParser.SEMICOLON, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode EQUALS() { return GetToken(सृजनParser.EQUALS, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
 			return GetRuleContext<ExpressionContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(सृजनParser.SEMICOLON, 0); }
 		public VariableDeclarationContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -663,32 +680,35 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitVariableDeclaration(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitVariableDeclaration(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public VariableDeclarationContext variableDeclaration() {
 		VariableDeclarationContext _localctx = new VariableDeclarationContext(Context, State);
-		EnterRule(_localctx, 14, RULE_variableDeclaration);
+		EnterRule(_localctx, 16, RULE_variableDeclaration);
+		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 97;
+			State = 104;
 			Match(ID);
-			State = 98;
+			State = 105;
 			Match(T__0);
-			State = 99;
+			State = 106;
 			Match(TYPE);
-			State = 100;
-			Match(EQUALS);
-			State = 101;
-			expression();
-			State = 102;
+			State = 109;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==EQUALS) {
+				{
+				State = 107;
+				Match(EQUALS);
+				State = 108;
+				expression();
+				}
+			}
+
+			State = 111;
 			Match(SEMICOLON);
 			}
 		}
@@ -725,28 +745,22 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitAssignment(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitAssignment(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public AssignmentContext assignment() {
 		AssignmentContext _localctx = new AssignmentContext(Context, State);
-		EnterRule(_localctx, 16, RULE_assignment);
+		EnterRule(_localctx, 18, RULE_assignment);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 104;
+			State = 113;
 			Match(ID);
-			State = 105;
+			State = 114;
 			Match(EQUALS);
-			State = 106;
+			State = 115;
 			expression();
-			State = 107;
+			State = 116;
 			Match(SEMICOLON);
 			}
 		}
@@ -791,52 +805,46 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitIfStatement(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitIfStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public IfStatementContext ifStatement() {
 		IfStatementContext _localctx = new IfStatementContext(Context, State);
-		EnterRule(_localctx, 18, RULE_ifStatement);
+		EnterRule(_localctx, 20, RULE_ifStatement);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 109;
+			State = 118;
 			Match(IF);
-			State = 110;
+			State = 119;
 			condition();
-			State = 111;
+			State = 120;
 			Match(THEN);
-			State = 112;
+			State = 121;
 			Match(T__3);
-			State = 114;
+			State = 123;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 113;
+				State = 122;
 				statement();
 				}
 				}
-				State = 116;
+				State = 125;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5857280L) != 0) );
-			State = 118;
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 22634496L) != 0) );
+			State = 127;
 			Match(T__5);
-			State = 120;
+			State = 129;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==ELSE) {
 				{
-				State = 119;
+				State = 128;
 				elseStatement();
 				}
 			}
@@ -877,41 +885,35 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitElseStatement(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitElseStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ElseStatementContext elseStatement() {
 		ElseStatementContext _localctx = new ElseStatementContext(Context, State);
-		EnterRule(_localctx, 20, RULE_elseStatement);
+		EnterRule(_localctx, 22, RULE_elseStatement);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 122;
+			State = 131;
 			Match(ELSE);
-			State = 123;
+			State = 132;
 			Match(T__3);
-			State = 125;
+			State = 134;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 124;
+				State = 133;
 				statement();
 				}
 				}
-				State = 127;
+				State = 136;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5857280L) != 0) );
-			State = 129;
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 22634496L) != 0) );
+			State = 138;
 			Match(T__5);
 			}
 		}
@@ -952,43 +954,37 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitWhileLoop(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitWhileLoop(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public WhileLoopContext whileLoop() {
 		WhileLoopContext _localctx = new WhileLoopContext(Context, State);
-		EnterRule(_localctx, 22, RULE_whileLoop);
+		EnterRule(_localctx, 24, RULE_whileLoop);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 131;
+			State = 140;
 			Match(WHILE);
-			State = 132;
+			State = 141;
 			condition();
-			State = 133;
+			State = 142;
 			Match(T__3);
-			State = 135;
+			State = 144;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 134;
+				State = 143;
 				statement();
 				}
 				}
-				State = 137;
+				State = 146;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5857280L) != 0) );
-			State = 139;
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 22634496L) != 0) );
+			State = 148;
 			Match(T__5);
 			}
 		}
@@ -1009,6 +1005,7 @@ public partial class सृजनParser : Parser {
 			return GetRuleContext<ExpressionContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(सृजनParser.SEMICOLON, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEWLINE() { return GetToken(सृजनParser.NEWLINE, 0); }
 		public PrintStatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -1024,26 +1021,31 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitPrintStatement(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitPrintStatement(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public PrintStatementContext printStatement() {
 		PrintStatementContext _localctx = new PrintStatementContext(Context, State);
-		EnterRule(_localctx, 24, RULE_printStatement);
+		EnterRule(_localctx, 26, RULE_printStatement);
+		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 141;
+			State = 150;
 			Match(PRINT);
-			State = 142;
+			State = 152;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==NEWLINE) {
+				{
+				State = 151;
+				Match(NEWLINE);
+				}
+			}
+
+			State = 154;
 			expression();
-			State = 143;
+			State = 155;
 			Match(SEMICOLON);
 			}
 		}
@@ -1083,26 +1085,20 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitCondition(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitCondition(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ConditionContext condition() {
 		ConditionContext _localctx = new ConditionContext(Context, State);
-		EnterRule(_localctx, 26, RULE_condition);
+		EnterRule(_localctx, 28, RULE_condition);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 145;
+			State = 157;
 			expression();
-			State = 146;
+			State = 158;
 			comparisionOperator();
-			State = 147;
+			State = 159;
 			expression();
 			}
 		}
@@ -1133,23 +1129,17 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitComparisionOperator(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitComparisionOperator(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ComparisionOperatorContext comparisionOperator() {
 		ComparisionOperatorContext _localctx = new ComparisionOperatorContext(Context, State);
-		EnterRule(_localctx, 28, RULE_comparisionOperator);
+		EnterRule(_localctx, 30, RULE_comparisionOperator);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 149;
+			State = 161;
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 8064L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -1201,31 +1191,25 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitExpression(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public ExpressionContext expression() {
 		ExpressionContext _localctx = new ExpressionContext(Context, State);
-		EnterRule(_localctx, 30, RULE_expression);
+		EnterRule(_localctx, 32, RULE_expression);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 151;
+			State = 163;
 			term();
-			State = 156;
+			State = 168;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==PLUS || _la==MINUS) {
 				{
 				{
-				State = 152;
+				State = 164;
 				_la = TokenStream.LA(1);
 				if ( !(_la==PLUS || _la==MINUS) ) {
 				ErrorHandler.RecoverInline(this);
@@ -1234,11 +1218,11 @@ public partial class सृजनParser : Parser {
 					ErrorHandler.ReportMatch(this);
 				    Consume();
 				}
-				State = 153;
+				State = 165;
 				term();
 				}
 				}
-				State = 158;
+				State = 170;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1285,31 +1269,25 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitTerm(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitTerm(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public TermContext term() {
 		TermContext _localctx = new TermContext(Context, State);
-		EnterRule(_localctx, 32, RULE_term);
+		EnterRule(_localctx, 34, RULE_term);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 159;
+			State = 171;
 			factor();
-			State = 164;
+			State = 176;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==MULTIPLY || _la==DIVIDE) {
 				{
 				{
-				State = 160;
+				State = 172;
 				_la = TokenStream.LA(1);
 				if ( !(_la==MULTIPLY || _la==DIVIDE) ) {
 				ErrorHandler.RecoverInline(this);
@@ -1318,11 +1296,11 @@ public partial class सृजनParser : Parser {
 					ErrorHandler.ReportMatch(this);
 				    Consume();
 				}
-				State = 161;
+				State = 173;
 				factor();
 				}
 				}
-				State = 166;
+				State = 178;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1379,113 +1357,107 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitFunction(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFunction(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public FunctionContext function() {
 		FunctionContext _localctx = new FunctionContext(Context, State);
-		EnterRule(_localctx, 34, RULE_function);
+		EnterRule(_localctx, 36, RULE_function);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 167;
+			State = 179;
 			Match(TYPE);
-			State = 170;
+			State = 182;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case ID:
 				{
-				State = 168;
+				State = 180;
 				functionName();
 				}
 				break;
 			case MAIN:
 				{
-				State = 169;
+				State = 181;
 				Match(MAIN);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			State = 172;
+			State = 184;
 			Match(LPAREN);
-			State = 185;
+			State = 197;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==TYPE) {
 				{
 				{
-				State = 173;
+				State = 185;
 				Match(TYPE);
-				State = 174;
+				State = 186;
 				Match(ID);
-				State = 180;
+				State = 192;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				while (_la==T__4) {
 					{
 					{
-					State = 175;
+					State = 187;
 					Match(T__4);
-					State = 176;
+					State = 188;
 					Match(TYPE);
-					State = 177;
+					State = 189;
 					Match(ID);
 					}
 					}
-					State = 182;
+					State = 194;
 					ErrorHandler.Sync(this);
 					_la = TokenStream.LA(1);
 				}
 				}
 				}
-				State = 187;
+				State = 199;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 188;
+			State = 200;
 			Match(RPAREN);
-			State = 189;
+			State = 201;
 			Match(T__3);
-			State = 191;
+			State = 203;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 190;
+				State = 202;
 				statement();
 				}
 				}
-				State = 193;
+				State = 205;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 5857280L) != 0) );
-			State = 199;
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 22634496L) != 0) );
+			State = 211;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==RETURN) {
 				{
 				{
-				State = 195;
+				State = 207;
 				Match(RETURN);
-				State = 196;
+				State = 208;
 				statement();
 				}
 				}
-				State = 201;
+				State = 213;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 202;
+			State = 214;
 			Match(T__5);
 			}
 		}
@@ -1517,22 +1489,16 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitFunctionName(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFunctionName(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public FunctionNameContext functionName() {
 		FunctionNameContext _localctx = new FunctionNameContext(Context, State);
-		EnterRule(_localctx, 36, RULE_functionName);
+		EnterRule(_localctx, 38, RULE_functionName);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 204;
+			State = 216;
 			Match(ID);
 			}
 		}
@@ -1576,72 +1542,66 @@ public partial class सृजनParser : Parser {
 			IसृजनListener typedListener = listener as IसृजनListener;
 			if (typedListener != null) typedListener.ExitFactor(this);
 		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IसृजनVisitor<TResult> typedVisitor = visitor as IसृजनVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitFactor(this);
-			else return visitor.VisitChildren(this);
-		}
 	}
 
 	[RuleVersion(0)]
 	public FactorContext factor() {
 		FactorContext _localctx = new FactorContext(Context, State);
-		EnterRule(_localctx, 38, RULE_factor);
+		EnterRule(_localctx, 40, RULE_factor);
 		try {
-			State = 216;
+			State = 228;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,15,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,17,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 206;
+				State = 218;
 				Match(LPAREN);
-				State = 207;
+				State = 219;
 				expression();
-				State = 208;
+				State = 220;
 				Match(RPAREN);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 210;
+				State = 222;
 				Match(INT);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 211;
+				State = 223;
 				Match(CHAR);
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 212;
+				State = 224;
 				Match(STRING);
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 213;
+				State = 225;
 				Match(ID);
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 214;
+				State = 226;
 				Match(DECIMAL);
 				}
 				break;
 			case 7:
 				EnterOuterAlt(_localctx, 7);
 				{
-				State = 215;
+				State = 227;
 				arrayAccess();
 				}
 				break;
@@ -1659,75 +1619,79 @@ public partial class सृजनParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,35,219,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,38,231,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
-		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,1,0,4,0,42,8,0,11,0,
-		12,0,43,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,56,8,1,1,2,1,2,1,2,
-		1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,
-		5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,5,6,88,8,6,10,6,12,6,91,9,6,3,6,
-		93,8,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,9,
-		1,9,1,9,1,9,1,9,4,9,115,8,9,11,9,12,9,116,1,9,1,9,3,9,121,8,9,1,10,1,10,
-		1,10,4,10,126,8,10,11,10,12,10,127,1,10,1,10,1,11,1,11,1,11,1,11,4,11,
-		136,8,11,11,11,12,11,137,1,11,1,11,1,12,1,12,1,12,1,12,1,13,1,13,1,13,
-		1,13,1,14,1,14,1,15,1,15,1,15,5,15,155,8,15,10,15,12,15,158,9,15,1,16,
-		1,16,1,16,5,16,163,8,16,10,16,12,16,166,9,16,1,17,1,17,1,17,3,17,171,8,
-		17,1,17,1,17,1,17,1,17,1,17,1,17,5,17,179,8,17,10,17,12,17,182,9,17,5,
-		17,184,8,17,10,17,12,17,187,9,17,1,17,1,17,1,17,4,17,192,8,17,11,17,12,
-		17,193,1,17,1,17,5,17,198,8,17,10,17,12,17,201,9,17,1,17,1,17,1,18,1,18,
-		1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,3,19,217,8,19,1,19,0,
-		0,20,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,0,3,1,0,7,
-		12,1,0,27,28,1,0,29,30,227,0,41,1,0,0,0,2,55,1,0,0,0,4,57,1,0,0,0,6,60,
-		1,0,0,0,8,68,1,0,0,0,10,76,1,0,0,0,12,81,1,0,0,0,14,97,1,0,0,0,16,104,
-		1,0,0,0,18,109,1,0,0,0,20,122,1,0,0,0,22,131,1,0,0,0,24,141,1,0,0,0,26,
-		145,1,0,0,0,28,149,1,0,0,0,30,151,1,0,0,0,32,159,1,0,0,0,34,167,1,0,0,
-		0,36,204,1,0,0,0,38,216,1,0,0,0,40,42,3,2,1,0,41,40,1,0,0,0,42,43,1,0,
-		0,0,43,41,1,0,0,0,43,44,1,0,0,0,44,1,1,0,0,0,45,56,3,14,7,0,46,56,3,16,
-		8,0,47,56,3,18,9,0,48,56,3,22,11,0,49,56,3,24,12,0,50,56,3,34,17,0,51,
-		56,3,4,2,0,52,56,3,6,3,0,53,56,3,8,4,0,54,56,3,12,6,0,55,45,1,0,0,0,55,
-		46,1,0,0,0,55,47,1,0,0,0,55,48,1,0,0,0,55,49,1,0,0,0,55,50,1,0,0,0,55,
-		51,1,0,0,0,55,52,1,0,0,0,55,53,1,0,0,0,55,54,1,0,0,0,56,3,1,0,0,0,57,58,
-		5,14,0,0,58,59,5,34,0,0,59,5,1,0,0,0,60,61,5,22,0,0,61,62,5,1,0,0,62,63,
-		5,13,0,0,63,64,5,2,0,0,64,65,3,30,15,0,65,66,5,3,0,0,66,67,5,34,0,0,67,
-		7,1,0,0,0,68,69,5,22,0,0,69,70,5,2,0,0,70,71,3,30,15,0,71,72,5,3,0,0,72,
-		73,5,31,0,0,73,74,3,30,15,0,74,75,5,34,0,0,75,9,1,0,0,0,76,77,5,22,0,0,
-		77,78,5,2,0,0,78,79,3,30,15,0,79,80,5,3,0,0,80,11,1,0,0,0,81,82,5,22,0,
-		0,82,83,5,31,0,0,83,92,5,4,0,0,84,89,3,30,15,0,85,86,5,5,0,0,86,88,3,30,
-		15,0,87,85,1,0,0,0,88,91,1,0,0,0,89,87,1,0,0,0,89,90,1,0,0,0,90,93,1,0,
-		0,0,91,89,1,0,0,0,92,84,1,0,0,0,92,93,1,0,0,0,93,94,1,0,0,0,94,95,5,6,
-		0,0,95,96,5,34,0,0,96,13,1,0,0,0,97,98,5,22,0,0,98,99,5,1,0,0,99,100,5,
-		13,0,0,100,101,5,31,0,0,101,102,3,30,15,0,102,103,5,34,0,0,103,15,1,0,
-		0,0,104,105,5,22,0,0,105,106,5,31,0,0,106,107,3,30,15,0,107,108,5,34,0,
-		0,108,17,1,0,0,0,109,110,5,16,0,0,110,111,3,26,13,0,111,112,5,17,0,0,112,
-		114,5,4,0,0,113,115,3,2,1,0,114,113,1,0,0,0,115,116,1,0,0,0,116,114,1,
-		0,0,0,116,117,1,0,0,0,117,118,1,0,0,0,118,120,5,6,0,0,119,121,3,20,10,
-		0,120,119,1,0,0,0,120,121,1,0,0,0,121,19,1,0,0,0,122,123,5,18,0,0,123,
-		125,5,4,0,0,124,126,3,2,1,0,125,124,1,0,0,0,126,127,1,0,0,0,127,125,1,
-		0,0,0,127,128,1,0,0,0,128,129,1,0,0,0,129,130,5,6,0,0,130,21,1,0,0,0,131,
-		132,5,19,0,0,132,133,3,26,13,0,133,135,5,4,0,0,134,136,3,2,1,0,135,134,
-		1,0,0,0,136,137,1,0,0,0,137,135,1,0,0,0,137,138,1,0,0,0,138,139,1,0,0,
-		0,139,140,5,6,0,0,140,23,1,0,0,0,141,142,5,20,0,0,142,143,3,30,15,0,143,
-		144,5,34,0,0,144,25,1,0,0,0,145,146,3,30,15,0,146,147,3,28,14,0,147,148,
-		3,30,15,0,148,27,1,0,0,0,149,150,7,0,0,0,150,29,1,0,0,0,151,156,3,32,16,
-		0,152,153,7,1,0,0,153,155,3,32,16,0,154,152,1,0,0,0,155,158,1,0,0,0,156,
-		154,1,0,0,0,156,157,1,0,0,0,157,31,1,0,0,0,158,156,1,0,0,0,159,164,3,38,
-		19,0,160,161,7,2,0,0,161,163,3,38,19,0,162,160,1,0,0,0,163,166,1,0,0,0,
-		164,162,1,0,0,0,164,165,1,0,0,0,165,33,1,0,0,0,166,164,1,0,0,0,167,170,
-		5,13,0,0,168,171,3,36,18,0,169,171,5,15,0,0,170,168,1,0,0,0,170,169,1,
-		0,0,0,171,172,1,0,0,0,172,185,5,32,0,0,173,174,5,13,0,0,174,180,5,22,0,
-		0,175,176,5,5,0,0,176,177,5,13,0,0,177,179,5,22,0,0,178,175,1,0,0,0,179,
-		182,1,0,0,0,180,178,1,0,0,0,180,181,1,0,0,0,181,184,1,0,0,0,182,180,1,
-		0,0,0,183,173,1,0,0,0,184,187,1,0,0,0,185,183,1,0,0,0,185,186,1,0,0,0,
-		186,188,1,0,0,0,187,185,1,0,0,0,188,189,5,33,0,0,189,191,5,4,0,0,190,192,
-		3,2,1,0,191,190,1,0,0,0,192,193,1,0,0,0,193,191,1,0,0,0,193,194,1,0,0,
-		0,194,199,1,0,0,0,195,196,5,21,0,0,196,198,3,2,1,0,197,195,1,0,0,0,198,
-		201,1,0,0,0,199,197,1,0,0,0,199,200,1,0,0,0,200,202,1,0,0,0,201,199,1,
-		0,0,0,202,203,5,6,0,0,203,35,1,0,0,0,204,205,5,22,0,0,205,37,1,0,0,0,206,
-		207,5,32,0,0,207,208,3,30,15,0,208,209,5,33,0,0,209,217,1,0,0,0,210,217,
-		5,23,0,0,211,217,5,25,0,0,212,217,5,26,0,0,213,217,5,22,0,0,214,217,5,
-		24,0,0,215,217,3,10,5,0,216,206,1,0,0,0,216,210,1,0,0,0,216,211,1,0,0,
-		0,216,212,1,0,0,0,216,213,1,0,0,0,216,214,1,0,0,0,216,215,1,0,0,0,217,
-		39,1,0,0,0,16,43,55,89,92,116,120,127,137,156,164,170,180,185,193,199,
-		216
+		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,1,0,4,0,44,
+		8,0,11,0,12,0,45,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,59,8,
+		1,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,
+		1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,5,
+		7,95,8,7,10,7,12,7,98,9,7,3,7,100,8,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,
+		3,8,110,8,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,10,1,10,1,10,1,10,1,10,4,10,
+		124,8,10,11,10,12,10,125,1,10,1,10,3,10,130,8,10,1,11,1,11,1,11,4,11,135,
+		8,11,11,11,12,11,136,1,11,1,11,1,12,1,12,1,12,1,12,4,12,145,8,12,11,12,
+		12,12,146,1,12,1,12,1,13,1,13,3,13,153,8,13,1,13,1,13,1,13,1,14,1,14,1,
+		14,1,14,1,15,1,15,1,16,1,16,1,16,5,16,167,8,16,10,16,12,16,170,9,16,1,
+		17,1,17,1,17,5,17,175,8,17,10,17,12,17,178,9,17,1,18,1,18,1,18,3,18,183,
+		8,18,1,18,1,18,1,18,1,18,1,18,1,18,5,18,191,8,18,10,18,12,18,194,9,18,
+		5,18,196,8,18,10,18,12,18,199,9,18,1,18,1,18,1,18,4,18,204,8,18,11,18,
+		12,18,205,1,18,1,18,5,18,210,8,18,10,18,12,18,213,9,18,1,18,1,18,1,19,
+		1,19,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,3,20,229,8,20,1,
+		20,0,0,21,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,0,
+		3,1,0,7,12,1,0,29,30,1,0,31,32,241,0,43,1,0,0,0,2,58,1,0,0,0,4,60,1,0,
+		0,0,6,64,1,0,0,0,8,67,1,0,0,0,10,75,1,0,0,0,12,83,1,0,0,0,14,88,1,0,0,
+		0,16,104,1,0,0,0,18,113,1,0,0,0,20,118,1,0,0,0,22,131,1,0,0,0,24,140,1,
+		0,0,0,26,150,1,0,0,0,28,157,1,0,0,0,30,161,1,0,0,0,32,163,1,0,0,0,34,171,
+		1,0,0,0,36,179,1,0,0,0,38,216,1,0,0,0,40,228,1,0,0,0,42,44,3,2,1,0,43,
+		42,1,0,0,0,44,45,1,0,0,0,45,43,1,0,0,0,45,46,1,0,0,0,46,1,1,0,0,0,47,59,
+		3,16,8,0,48,59,3,18,9,0,49,59,3,20,10,0,50,59,3,24,12,0,51,59,3,26,13,
+		0,52,59,3,36,18,0,53,59,3,6,3,0,54,59,3,8,4,0,55,59,3,10,5,0,56,59,3,14,
+		7,0,57,59,3,4,2,0,58,47,1,0,0,0,58,48,1,0,0,0,58,49,1,0,0,0,58,50,1,0,
+		0,0,58,51,1,0,0,0,58,52,1,0,0,0,58,53,1,0,0,0,58,54,1,0,0,0,58,55,1,0,
+		0,0,58,56,1,0,0,0,58,57,1,0,0,0,59,3,1,0,0,0,60,61,5,22,0,0,61,62,5,24,
+		0,0,62,63,5,36,0,0,63,5,1,0,0,0,64,65,5,14,0,0,65,66,5,36,0,0,66,7,1,0,
+		0,0,67,68,5,24,0,0,68,69,5,1,0,0,69,70,5,13,0,0,70,71,5,2,0,0,71,72,3,
+		32,16,0,72,73,5,3,0,0,73,74,5,36,0,0,74,9,1,0,0,0,75,76,5,24,0,0,76,77,
+		5,2,0,0,77,78,3,32,16,0,78,79,5,3,0,0,79,80,5,33,0,0,80,81,3,32,16,0,81,
+		82,5,36,0,0,82,11,1,0,0,0,83,84,5,24,0,0,84,85,5,2,0,0,85,86,3,32,16,0,
+		86,87,5,3,0,0,87,13,1,0,0,0,88,89,5,24,0,0,89,90,5,33,0,0,90,99,5,4,0,
+		0,91,96,3,32,16,0,92,93,5,5,0,0,93,95,3,32,16,0,94,92,1,0,0,0,95,98,1,
+		0,0,0,96,94,1,0,0,0,96,97,1,0,0,0,97,100,1,0,0,0,98,96,1,0,0,0,99,91,1,
+		0,0,0,99,100,1,0,0,0,100,101,1,0,0,0,101,102,5,6,0,0,102,103,5,36,0,0,
+		103,15,1,0,0,0,104,105,5,24,0,0,105,106,5,1,0,0,106,109,5,13,0,0,107,108,
+		5,33,0,0,108,110,3,32,16,0,109,107,1,0,0,0,109,110,1,0,0,0,110,111,1,0,
+		0,0,111,112,5,36,0,0,112,17,1,0,0,0,113,114,5,24,0,0,114,115,5,33,0,0,
+		115,116,3,32,16,0,116,117,5,36,0,0,117,19,1,0,0,0,118,119,5,16,0,0,119,
+		120,3,28,14,0,120,121,5,17,0,0,121,123,5,4,0,0,122,124,3,2,1,0,123,122,
+		1,0,0,0,124,125,1,0,0,0,125,123,1,0,0,0,125,126,1,0,0,0,126,127,1,0,0,
+		0,127,129,5,6,0,0,128,130,3,22,11,0,129,128,1,0,0,0,129,130,1,0,0,0,130,
+		21,1,0,0,0,131,132,5,18,0,0,132,134,5,4,0,0,133,135,3,2,1,0,134,133,1,
+		0,0,0,135,136,1,0,0,0,136,134,1,0,0,0,136,137,1,0,0,0,137,138,1,0,0,0,
+		138,139,5,6,0,0,139,23,1,0,0,0,140,141,5,19,0,0,141,142,3,28,14,0,142,
+		144,5,4,0,0,143,145,3,2,1,0,144,143,1,0,0,0,145,146,1,0,0,0,146,144,1,
+		0,0,0,146,147,1,0,0,0,147,148,1,0,0,0,148,149,5,6,0,0,149,25,1,0,0,0,150,
+		152,5,20,0,0,151,153,5,21,0,0,152,151,1,0,0,0,152,153,1,0,0,0,153,154,
+		1,0,0,0,154,155,3,32,16,0,155,156,5,36,0,0,156,27,1,0,0,0,157,158,3,32,
+		16,0,158,159,3,30,15,0,159,160,3,32,16,0,160,29,1,0,0,0,161,162,7,0,0,
+		0,162,31,1,0,0,0,163,168,3,34,17,0,164,165,7,1,0,0,165,167,3,34,17,0,166,
+		164,1,0,0,0,167,170,1,0,0,0,168,166,1,0,0,0,168,169,1,0,0,0,169,33,1,0,
+		0,0,170,168,1,0,0,0,171,176,3,40,20,0,172,173,7,2,0,0,173,175,3,40,20,
+		0,174,172,1,0,0,0,175,178,1,0,0,0,176,174,1,0,0,0,176,177,1,0,0,0,177,
+		35,1,0,0,0,178,176,1,0,0,0,179,182,5,13,0,0,180,183,3,38,19,0,181,183,
+		5,15,0,0,182,180,1,0,0,0,182,181,1,0,0,0,183,184,1,0,0,0,184,197,5,34,
+		0,0,185,186,5,13,0,0,186,192,5,24,0,0,187,188,5,5,0,0,188,189,5,13,0,0,
+		189,191,5,24,0,0,190,187,1,0,0,0,191,194,1,0,0,0,192,190,1,0,0,0,192,193,
+		1,0,0,0,193,196,1,0,0,0,194,192,1,0,0,0,195,185,1,0,0,0,196,199,1,0,0,
+		0,197,195,1,0,0,0,197,198,1,0,0,0,198,200,1,0,0,0,199,197,1,0,0,0,200,
+		201,5,35,0,0,201,203,5,4,0,0,202,204,3,2,1,0,203,202,1,0,0,0,204,205,1,
+		0,0,0,205,203,1,0,0,0,205,206,1,0,0,0,206,211,1,0,0,0,207,208,5,23,0,0,
+		208,210,3,2,1,0,209,207,1,0,0,0,210,213,1,0,0,0,211,209,1,0,0,0,211,212,
+		1,0,0,0,212,214,1,0,0,0,213,211,1,0,0,0,214,215,5,6,0,0,215,37,1,0,0,0,
+		216,217,5,24,0,0,217,39,1,0,0,0,218,219,5,34,0,0,219,220,3,32,16,0,220,
+		221,5,35,0,0,221,229,1,0,0,0,222,229,5,25,0,0,223,229,5,27,0,0,224,229,
+		5,28,0,0,225,229,5,24,0,0,226,229,5,26,0,0,227,229,3,12,6,0,228,218,1,
+		0,0,0,228,222,1,0,0,0,228,223,1,0,0,0,228,224,1,0,0,0,228,225,1,0,0,0,
+		228,226,1,0,0,0,228,227,1,0,0,0,229,41,1,0,0,0,18,45,58,96,99,109,125,
+		129,136,146,152,168,176,182,192,197,205,211,228
 	};
 
 	public static readonly ATN _ATN =

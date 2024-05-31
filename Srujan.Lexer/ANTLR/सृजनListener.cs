@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:/Users/plondhe/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
+// Generated from d:/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -50,6 +50,16 @@ public interface IसृजनListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitStatement([NotNull] सृजनParser.StatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.inputStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInputStatement([NotNull] सृजनParser.InputStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.inputStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInputStatement([NotNull] सृजनParser.InputStatementContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.breakStatement"/>.
 	/// </summary>

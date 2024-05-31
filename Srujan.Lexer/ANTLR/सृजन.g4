@@ -9,6 +9,8 @@ THEN        : 'तो';
 ELSE        : 'या';
 WHILE       : 'जबतक';
 PRINT       : 'दिखाएँ';
+NEWLINE     : 'पंक्ति';
+SCAN        : 'स्वीकार करें';
 RETURN      : 'उत्तर';
 ID          : [ऀ-ॿ_]+;
 INT         : [0-9]+;
@@ -23,6 +25,7 @@ EQUALS      : '=';
 LPAREN      : '(';
 RPAREN      : ')';
 SEMICOLON   : ';';
+COMMENT     : '//'.*?'\n' -> skip;
 WS: [ \n\t\r]+ -> skip;
 
 
@@ -39,7 +42,10 @@ statement   : variableDeclaration
             | arrayDeclaration
             | arrayAssignment
             | arrayInitialization
+            | inputStatement
             ;
+
+inputStatement : SCAN ID SEMICOLON;
 
 breakStatement : BREAK SEMICOLON;
 
@@ -51,7 +57,7 @@ arrayAccess : ID'['expression']';
 
 arrayInitialization : ID '=' '{' (expression (',' expression)*)? '}' SEMICOLON;
 
-variableDeclaration :  ID':' TYPE '=' expression SEMICOLON;
+variableDeclaration :  ID':' TYPE ('=' expression)? SEMICOLON;
 
 assignment  : ID '=' expression SEMICOLON;
 
@@ -61,7 +67,7 @@ elseStatement : ELSE '{' statement+ '}';
 
 whileLoop   : WHILE condition '{' statement+ '}';
 
-printStatement : PRINT expression SEMICOLON;
+printStatement : PRINT (NEWLINE)? expression SEMICOLON;
 
 condition   : expression comparisionOperator expression;
 

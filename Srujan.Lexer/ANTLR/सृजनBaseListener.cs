@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:/Users/plondhe/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
+// Generated from d:/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -59,6 +59,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitStatement([NotNull] सृजनParser.StatementContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.inputStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterInputStatement([NotNull] सृजनParser.InputStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.inputStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitInputStatement([NotNull] सृजनParser.InputStatementContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.breakStatement"/>.
 	/// <para>The default implementation does nothing.</para>
