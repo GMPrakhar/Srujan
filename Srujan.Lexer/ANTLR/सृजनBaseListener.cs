@@ -84,6 +84,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitBreakStatement([NotNull] सृजनParser.BreakStatementContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.continueStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterContinueStatement([NotNull] सृजनParser.ContinueStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.continueStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitContinueStatement([NotNull] सृजनParser.ContinueStatementContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.arrayDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

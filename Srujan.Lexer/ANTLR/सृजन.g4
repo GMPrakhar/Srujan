@@ -12,12 +12,14 @@ PRINT       : 'दिखाएँ';
 NEWLINE     : 'पंक्ति';
 SCAN        : 'स्वीकार करें';
 RETURN      : 'उत्तर';
+CONTINUE    : 'जारी रखें';
 ID          : [ऀ-ॿ_]+;
 INT         : [0-9]+;
 DECIMAL     : INT('.' [0-9]+)?;
 CHAR        : '\''.'\'';
 STRING      : '"'.*?'"';
 PLUS        : '+';
+MOD         : '%';
 MINUS       : '-';
 MULTIPLY    : '*';
 DIVIDE      : '/';
@@ -43,11 +45,14 @@ statement   : variableDeclaration
             | arrayAssignment
             | arrayInitialization
             | inputStatement
+            | continueStatement
             ;
 
 inputStatement : SCAN ID SEMICOLON;
 
 breakStatement : BREAK SEMICOLON;
+
+continueStatement : CONTINUE SEMICOLON;
 
 arrayDeclaration : ID':' TYPE'['expression']' SEMICOLON; 
 
@@ -74,7 +79,7 @@ condition   : expression comparisionOperator expression;
 comparisionOperator : '<' | '>' | '==' | '!=' | '>=' | '<=';
 
 expression  : term ((PLUS | MINUS) term)*;
-term        : factor ((MULTIPLY | DIVIDE) factor)*;
+term        : factor ((MULTIPLY | DIVIDE | MOD) factor)*;
 
 function    : TYPE (functionName | MAIN) '(' (TYPE ID (',' TYPE ID)*)* ')' '{' statement+ ( RETURN statement )* '}';
 

@@ -58,6 +58,7 @@ namespace Srujan
                     new सृजनParseTreeWalker(listener.builder, listener).Walk(listener, tree);
 
                     // Dump LLVM IR for debugging
+                    module.AddModuleFlag("-opaque-pointers", LLVMModuleFlagBehavior.LLVMModuleFlagBehaviorOverride, 0);
                     var data = LLVM.PrintModuleToString(module);
                     var s = new string(data);
 

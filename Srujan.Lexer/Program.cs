@@ -7,7 +7,7 @@ string fileName;
 bool justCompile;
 if (args.Length == 0)
 {
-    fileName = "D:\\Repos\\Srujan\\Srujan.Lexer\\Samples\\पिंगाला.सृ";
+    fileName = "D:\\Repos\\Srujan\\Srujan.Lexer\\Samples\\जारी.सृ";
     justCompile = false;
 }
 else

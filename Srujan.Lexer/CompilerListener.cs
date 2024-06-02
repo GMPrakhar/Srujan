@@ -17,13 +17,14 @@ namespace Srujan.Lexer
     {
         private LLVMModuleRef module;
         public unsafe LLVMBuilderRef builder;
+        
         Dictionary<string, (LLVMTypeRef type, LLVMValueRef value, LLVMValueRef variable)> variables = new Dictionary<string, (LLVMTypeRef, LLVMValueRef, LLVMValueRef)>();
         Dictionary<LLVMTypeRef, string> staticMappingForPrint = new Dictionary<LLVMTypeRef, string>()
         {
             { LLVM.Int32Type(), "%d" },
             { LLVM.Int16Type(), "%c" },
             { LLVM.DoubleType(), "%.3f" },
-            { LLVM.PointerType(LLVM.Int16Type(), 0), "%s\n" },
+            { LLVM.PointerType(LLVM.Int16Type(), 0), "%s" },
 
         };
 
@@ -56,12 +57,11 @@ namespace Srujan.Lexer
                     // the variable is a string variable, load using getelementptr in bounds
 
                     var indices = new LLVMOpaqueValue*[] { LLVM.ConstInt(LLVM.Int32Type(), (uint)0, 0) };
-
+                    LLVMValueRef variable;
                     fixed (LLVMOpaqueValue** indicesPointer = &(indices[0]))
                     {
-                        var variable = LLVM.BuildGEP2(builder, variableContext.type, variableContext.variable, indicesPointer, 0, sp);
+                        return LLVM.BuildGEP2(builder, LLVM.PointerType(variableContext.value.TypeOf, 0), variableContext.variable, indicesPointer, 0, "tempString".ToSBytePointer());
                     }
-                    return LLVM.BuildLoad2(builder, LLVM.PointerType(LLVM.Int16Type(), 0), variableContext.variable, "loadtmp".ToSBytePointer());
                 }
 
                 return LLVM.BuildLoad2(builder, variableContext.type, variableContext.variable, "loadtmp".ToSBytePointer());
@@ -118,15 +118,28 @@ namespace Srujan.Lexer
                         finalValue = LLVM.BuildFMul(this.builder, left, right, "multmp".ToSBytePointer());
                     }
                 }
-                else
+                else if (termContext.DIVIDE()?.Length != 0)
                 {
                     if (left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
                     {
-                        finalValue = LLVM.BuildUDiv(this.builder, left, right, "divtmp".ToSBytePointer());
+                        finalValue = LLVM.BuildSDiv(this.builder, left, right, "divtmp".ToSBytePointer());
                     }
                     else
                     {
                         finalValue = LLVM.BuildFDiv(this.builder, left, right, "divtmp".ToSBytePointer());
+                    }
+                }
+                else
+                {
+                    // Generate code for modulo operation
+
+                    if (left.TypeOf == LLVM.Int32Type() && right.TypeOf == LLVM.Int32Type())
+                    {
+                        finalValue = LLVM.BuildSRem(this.builder, left, right, "modtmp".ToSBytePointer());
+                    }
+                    else
+                    {
+                        finalValue = LLVM.BuildFRem(this.builder, left, right, "modtmp".ToSBytePointer());
                     }
                 }
 
@@ -230,7 +243,7 @@ namespace Srujan.Lexer
 
             if (typeRef.Kind == LLVMTypeKind.LLVMPointerTypeKind)
             {
-                variable = LLVM.BuildArrayAlloca(this.builder, typeRef, value, sp);
+                variable = LLVM.BuildArrayAlloca(this.builder, value.TypeOf, value, sp);
             }
             else
             {
@@ -392,7 +405,10 @@ namespace Srujan.Lexer
             {
                 valueType = LLVM.PointerType(LLVM.Int16Type(), 0);
                 // convert LLVM.ConstString to a pointer
-                evaluatedExpression = LLVM.BuildGlobalStringPtr(this.builder, (evaluatedExpression.GetAsString(out _)+newline).ToSBytePointer(), "stringParam".ToSBytePointer());
+                evaluatedExpression = LLVM.BuildGlobalStringPtr(this.builder, evaluatedExpression.GetAsString(out _).ToSBytePointer(), "stringParam".ToSBytePointer());
+            }else if(evaluatedExpression.TypeOf.Kind == LLVMTypeKind.LLVMArrayTypeKind || evaluatedExpression.TypeOf.Kind == LLVMTypeKind.LLVMPointerTypeKind)
+            {
+                valueType = LLVM.PointerType(LLVM.Int16Type(), 0);
             }
 
             // Convert the pointer value to a string pointer using bitcast
@@ -404,6 +420,8 @@ namespace Srujan.Lexer
             // Call printf function
             // Create LLVM IR function prototype for printf
             LLVMOpaqueType*[] printfArgs = { stringPtrType, valueType };
+
+            // call to puts function from c stdlib
 
             fixed(LLVMOpaqueType**  finalPrintArgs = &(printfArgs[0]))
             {

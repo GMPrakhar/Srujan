@@ -54,8 +54,14 @@ namespace Srujan
                     LLVM.BuildBr(builder, after);
 
                     LLVM.PositionBuilderAtEnd(builder, after);
+
                     // No need to walk further as we are breaking out of the loop
                     return;
+                }
+
+                if(statement.continueStatement() != null)
+                {
+                    break;
                 }
 
                 this.parentWalker.Walk(this.listener, statement);

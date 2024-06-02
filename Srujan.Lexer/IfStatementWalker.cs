@@ -42,6 +42,7 @@ namespace Srujan
             LLVM.PositionBuilderAtEnd(builder, thenBlock);
 
             bool breakStatementFound = false;
+            bool continueStatementFound = false;
             // Generate code for then block
             foreach (var statement in context.statement())
             {
@@ -52,11 +53,18 @@ namespace Srujan
                     breakStatementFound = true;
                     break;
                 }
+                if (statement.continueStatement() != null)
+                {
+                    var loop = this.GetPreviousLoopBlock(LLVM.GetInsertBlock(builder), true);
+                    LLVM.BuildBr(builder, loop);
+                    continueStatementFound = true;
+                    break;
+                }
 
                 this.parentWalker.Walk(this.listener, statement);
             }
 
-            if (!breakStatementFound)
+            if (!breakStatementFound && !continueStatementFound)
             {
                 LLVM.BuildBr(builder, mergeBlock);
             }
@@ -77,8 +85,10 @@ namespace Srujan
             LLVM.PositionBuilderAtEnd(builder, mergeBlock);
         }
 
-        private LLVMBasicBlockRef GetPreviousLoopBlock(LLVMBasicBlockRef currentBlock)
+        private LLVMBasicBlockRef GetPreviousLoopBlock(LLVMBasicBlockRef currentBlock, bool forContinueBlock = false)
         {
+            var loopToFind = forContinueBlock ? "beforeLoop" : "afterLoop";
+
             // loop through parent blocks to find the loop block
             LLVMOpaqueBasicBlock* parentBlock = LLVM.GetPreviousBasicBlock(currentBlock);
             while (parentBlock != null)
@@ -86,7 +96,7 @@ namespace Srujan
                 var blockname = LLVM.GetBasicBlockName(parentBlock);
                 // convert sbyte* to string
                 var blockNameString = new string((sbyte*)blockname);
-                if (blockNameString.Contains("afterLoop"))
+                if (blockNameString.Contains(loopToFind))
                 {
                     return parentBlock;
                 }
