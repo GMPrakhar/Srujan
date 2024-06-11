@@ -56,6 +56,17 @@ namespace Srujan
                 return;
             }
 
+            if (t is सृजनParser.FunctionContext)
+            {
+                if (listener is not CompilerListener)
+                {
+                    throw new InvalidOperationException("Listener must be of type CompilerListener");
+                }
+
+                new FunctionWalker(builder, listener as CompilerListener, this).EnterFunction(t as सृजनParser.FunctionContext);
+                return;
+            }
+
             IRuleNode ruleNode = (IRuleNode)t;
             EnterRule(listener, ruleNode);
             int childCount = ruleNode.ChildCount;

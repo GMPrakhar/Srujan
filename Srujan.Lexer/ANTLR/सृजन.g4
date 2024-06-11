@@ -13,6 +13,8 @@ NEWLINE     : 'पंक्ति';
 SCAN        : 'स्वीकार करें';
 RETURN      : 'उत्तर';
 CONTINUE    : 'जारी रखें';
+TRUE        : 'सही';
+FALSE       : 'गलत';
 ID          : [ऀ-ॿ_]+;
 INT         : [0-9]+;
 DECIMAL     : INT('.' [0-9]+)?;
@@ -46,6 +48,7 @@ statement   : variableDeclaration
             | arrayInitialization
             | inputStatement
             | continueStatement
+            | returnStatement
             ;
 
 inputStatement : SCAN ID SEMICOLON;
@@ -53,6 +56,8 @@ inputStatement : SCAN ID SEMICOLON;
 breakStatement : BREAK SEMICOLON;
 
 continueStatement : CONTINUE SEMICOLON;
+
+returnStatement : RETURN expression SEMICOLON;
 
 arrayDeclaration : ID':' TYPE'['expression']' SEMICOLON; 
 
@@ -74,14 +79,19 @@ whileLoop   : WHILE condition '{' statement+ '}';
 
 printStatement : PRINT (NEWLINE)? expression SEMICOLON;
 
-condition   : expression comparisionOperator expression;
+condition   : expression comparisionOperator expression (logicalOperator expression comparisionOperator expression)*;
 
 comparisionOperator : '<' | '>' | '==' | '!=' | '>=' | '<=';
+logicalOperator : '&&' | '||';
 
-expression  : term ((PLUS | MINUS) term)*;
+expression  : term ((PLUS | MINUS) term)*
+            | expression comparisionOperator expression (logicalOperator expression comparisionOperator expression)*;
+
 term        : factor ((MULTIPLY | DIVIDE | MOD) factor)*;
 
-function    : TYPE (functionName | MAIN) '(' (TYPE ID (',' TYPE ID)*)* ')' '{' statement+ ( RETURN statement )* '}';
+function    : TYPE (functionName | MAIN) '(' (TYPE ID (',' TYPE ID)*)* ')' '{' statement+ '}';
+
+functionCall : functionName '(' (expression (',' expression)*)? ')';
 
 functionName : ID;
 
@@ -91,4 +101,7 @@ factor      : LPAREN expression RPAREN
             | STRING
             | ID
             | DECIMAL
-            | arrayAccess;
+            | TRUE
+            | FALSE
+            | arrayAccess
+            | functionCall;

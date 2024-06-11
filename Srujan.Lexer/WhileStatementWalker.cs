@@ -36,12 +36,7 @@ namespace Srujan
             LLVM.BuildBr(builder, beforeLoop);
 
             LLVM.PositionBuilderAtEnd(builder, beforeLoop);
-            var conditionExpressions = context.condition().expression();
-            var leftExpression = this.listener.EvaluateExpression(conditionExpressions[0]);
-            var rightExpression = this.listener.EvaluateExpression(conditionExpressions[1]);
-            var operation = context.condition().comparisionOperator().GetText();
-
-            LLVMOpaqueValue* condition = ConditionBuilder.BuildConditionFromExpression(builder, leftExpression, rightExpression, operation);
+            LLVMOpaqueValue* condition = ConditionBuilder.GetFinalConditionForAllComparisions(this.listener, this.builder, context.condition());
 
             LLVM.BuildCondBr(builder, condition, loop, after);
 

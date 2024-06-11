@@ -81,6 +81,16 @@ public interface IसृजनListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitContinueStatement([NotNull] सृजनParser.ContinueStatementContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.returnStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterReturnStatement([NotNull] सृजनParser.ReturnStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.returnStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitReturnStatement([NotNull] सृजनParser.ReturnStatementContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.arrayDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -201,6 +211,16 @@ public interface IसृजनListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.logicalOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.logicalOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -230,6 +250,16 @@ public interface IसृजनListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitFunction([NotNull] सृजनParser.FunctionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.functionCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFunctionCall([NotNull] सृजनParser.FunctionCallContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.functionCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFunctionCall([NotNull] सृजनParser.FunctionCallContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.functionName"/>.
 	/// </summary>

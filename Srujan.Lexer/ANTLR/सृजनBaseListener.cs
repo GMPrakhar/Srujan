@@ -96,6 +96,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitContinueStatement([NotNull] सृजनParser.ContinueStatementContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.returnStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterReturnStatement([NotNull] सृजनParser.ReturnStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.returnStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitReturnStatement([NotNull] सृजनParser.ReturnStatementContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.arrayDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -240,6 +252,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.logicalOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.logicalOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -275,6 +299,18 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunction([NotNull] सृजनParser.FunctionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.functionCall"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFunctionCall([NotNull] सृजनParser.FunctionCallContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.functionCall"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFunctionCall([NotNull] सृजनParser.FunctionCallContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.functionName"/>.
 	/// <para>The default implementation does nothing.</para>

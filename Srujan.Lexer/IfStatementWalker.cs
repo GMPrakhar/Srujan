@@ -27,11 +27,7 @@ namespace Srujan
         public unsafe void EnterIfStatement([NotNull] IfStatementContext context)
         {
             var function = LLVM.GetBasicBlockParent(LLVM.GetInsertBlock(builder));
-            var conditionExpressions = context.condition().expression();
-            var leftExpression = this.listener.EvaluateExpression(conditionExpressions[0]);
-            var rightExpression = this.listener.EvaluateExpression(conditionExpressions[1]);
-            var operation = context.condition().comparisionOperator().GetText();
-            LLVMOpaqueValue* condition = ConditionBuilder.BuildConditionFromExpression(builder, leftExpression, rightExpression, operation);
+            LLVMOpaqueValue* condition = ConditionBuilder.GetFinalConditionForAllComparisions(this.listener, this.builder, context.condition());
 
             var thenBlock = LLVM.AppendBasicBlock(function, "then".ToSBytePointer());
             var elseBlock = LLVM.AppendBasicBlock(function, "else".ToSBytePointer());
@@ -46,7 +42,7 @@ namespace Srujan
             // Generate code for then block
             foreach (var statement in context.statement())
             {
-                if(statement.breakStatement() != null)
+                if (statement.breakStatement() != null)
                 {
                     var loop = this.GetPreviousLoopBlock(LLVM.GetInsertBlock(builder));
                     LLVM.BuildBr(builder, loop);

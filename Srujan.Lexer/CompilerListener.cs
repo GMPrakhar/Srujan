@@ -13,12 +13,12 @@ using static सृजनParser;
 namespace Srujan.Lexer
 {
 
-    internal unsafe class CompilerListener : सृजनBaseListener
+    public unsafe class CompilerListener : सृजनBaseListener
     {
-        private LLVMModuleRef module;
+        public unsafe LLVMModuleRef module;
         public unsafe LLVMBuilderRef builder;
         
-        Dictionary<string, (LLVMTypeRef type, LLVMValueRef value, LLVMValueRef variable)> variables = new Dictionary<string, (LLVMTypeRef, LLVMValueRef, LLVMValueRef)>();
+        public Dictionary<string, (LLVMTypeRef type, LLVMValueRef value, LLVMValueRef variable)> variables = new Dictionary<string, (LLVMTypeRef, LLVMValueRef, LLVMValueRef)>();
         Dictionary<LLVMTypeRef, string> staticMappingForPrint = new Dictionary<LLVMTypeRef, string>()
         {
             { LLVM.Int32Type(), "%d" },
@@ -28,7 +28,7 @@ namespace Srujan.Lexer
 
         };
 
-        IDictionary<string, LLVMTypeRef> stringTypeToLLVMType = new Dictionary<string, LLVMTypeRef>()
+        public IDictionary<string, LLVMTypeRef> stringTypeToLLVMType = new Dictionary<string, LLVMTypeRef>()
         {
             { "अंक", LLVM.Int32Type() },
             { "अक्षर", LLVM.Int16Type() },
@@ -93,7 +93,58 @@ namespace Srujan.Lexer
                 return GetArrayElement(context.arrayAccess());
             }
 
+            if (context.functionCall() != null)
+            {
+                // execute and return the value of the function call
+                return EvaluateFunctionCall(context.functionCall());
+            }
+
+            if (context.TRUE() != null)
+            {
+                return LLVM.ConstInt(LLVM.Int32Type(), 1, 0);
+            }
+
+            if (context.FALSE() != null)
+            {
+                return LLVM.ConstInt(LLVM.Int32Type(), 0, 0);
+            }
+
             return null;
+        }
+
+        private unsafe LLVMValueRef EvaluateFunctionCall(FunctionCallContext functionCallContext)
+        {
+            if (functionCallContext == null)
+                return null;
+
+            // call llvm function based on function name
+            var functionName = functionCallContext.functionName().GetText();
+            var function = module.GetNamedFunction(functionName);
+
+            var functionType = this.variables[functionName].type;
+
+            if (function.Handle == IntPtr.Zero)
+            {
+                throw new InvalidOperationException($"Function {functionName} is not defined");
+            }
+
+            var arguments = functionCallContext.expression();
+            if (function.ParamsCount != arguments.Length)
+            {
+                throw new InvalidOperationException($"Function {functionName} expects {function.ParamsCount} arguments, but {arguments.Length} were provided");
+            }
+
+            var functionArguments = new LLVMOpaqueValue*[arguments.Length];
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                functionArguments[i] = EvaluateExpression(arguments[i]);
+            }
+
+
+            fixed (LLVMOpaqueValue** argumentPointer = &(functionArguments[0]))
+            {
+                return LLVM.BuildCall2(this.builder, functionType, function, argumentPointer, (uint)arguments.Length, "calltmp".ToSBytePointer());
+            }
         }
 
         private LLVMValueRef EvaluateTerm(TermContext termContext)
@@ -152,6 +203,11 @@ namespace Srujan.Lexer
 
         public LLVMValueRef EvaluateExpression(ExpressionContext expressionContext)
         {
+            if(expressionContext.comparisionOperator()?.Length > 0)
+            {
+                return ConditionBuilder.GetFinalConditionForAllComparisions(this, this.builder, expressionContext);
+            }
+
             var allTerms = expressionContext.term();
             var firstTerm = allTerms[0];
             LLVMValueRef left = EvaluateTerm(firstTerm);
@@ -440,33 +496,9 @@ namespace Srujan.Lexer
             }
         }
 
-        public override unsafe void EnterFunction([NotNull] सृजनParser.FunctionContext context)
+        public override unsafe void EnterReturnStatement([NotNull] सृजनParser.ReturnStatementContext context)
         {
-            // Get function name and return type
-            string functionName = context.MAIN()?.GetText() != null ? "main" : context.functionName().GetText();
-
-            LLVMTypeRef returnType = LLVM.Int32Type(); // Assuming the return type is int for simplicity
-
-            // Create function type
-            LLVMTypeRef functionType = LLVM.FunctionType(returnType, null, 0, 0);
-
-            // Add function to module
-            LLVMValueRef function = LLVM.AddFunction(module, functionName.ToSBytePointer(), functionType);
-
-            // Create entry basic block
-            LLVMBasicBlockRef entryBlock = LLVM.AppendBasicBlock(function, "entry".ToSBytePointer());
-
-            // Set builder position to entry block
-            LLVM.PositionBuilderAtEnd(builder, entryBlock);
-
-            // Define function body (you would need to implement this based on your language semantics)
-            // For example, generate LLVM IR instructions for function body statements
-
-        }
-
-        public override unsafe void ExitFunction([NotNull] सृजनParser.FunctionContext context)
-        {
-            LLVM.BuildRet(builder, LLVM.ConstInt(LLVM.Int32Type(), 0, 0));
+            LLVM.BuildRet(builder, this.EvaluateExpression(context.expression()));
         }
     }
 }
