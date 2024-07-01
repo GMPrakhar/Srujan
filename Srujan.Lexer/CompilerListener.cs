@@ -208,6 +208,12 @@ namespace Srujan.Lexer
                 return ConditionBuilder.GetFinalConditionForAllComparisions(this, this.builder, expressionContext);
             }
 
+            if(expressionContext.bitwiseOperator() != null || expressionContext.complementOperator() != null)
+            {
+                var op = expressionContext.bitwiseOperator()?.GetText() ?? expressionContext.complementOperator().GetText();
+                return BitwiseOperatorBuilder.CreateBitwiseOperation(this, this.builder, expressionContext, op);
+            }
+
             var allTerms = expressionContext.term();
             var firstTerm = allTerms[0];
             LLVMValueRef left = EvaluateTerm(firstTerm);
@@ -498,7 +504,14 @@ namespace Srujan.Lexer
 
         public override unsafe void EnterReturnStatement([NotNull] सृजनParser.ReturnStatementContext context)
         {
-            LLVM.BuildRet(builder, this.EvaluateExpression(context.expression()));
+            var returnValue = this.EvaluateExpression(context.expression());
+            if (returnValue.TypeOf == LLVM.Int1Type())
+            {
+                // convert int1 to int32 as our boolean values are currently int32 to enable comparision
+                returnValue = LLVM.BuildIntCast2(this.builder, returnValue, LLVM.Int32Type(), 0, "boolToInt".ToSBytePointer());
+            }
+
+            LLVM.BuildRet(builder, returnValue);
         }
     }
 }

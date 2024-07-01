@@ -264,6 +264,30 @@ public partial class सृजनBaseListener : IसृजनListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.bitwiseOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBitwiseOperator([NotNull] सृजनParser.BitwiseOperatorContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.bitwiseOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBitwiseOperator([NotNull] सृजनParser.BitwiseOperatorContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.complementOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterComplementOperator([NotNull] सृजनParser.ComplementOperatorContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.complementOperator"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitComplementOperator([NotNull] सृजनParser.ComplementOperatorContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

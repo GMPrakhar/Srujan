@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:/Users/plondhe/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
+// Generated from d:/Repos/Srujan/Srujan.Lexer/ANTLR/सृजन.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -44,11 +44,29 @@ public interface IसृजनVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitStatement([NotNull] सृजनParser.StatementContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.inputStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInputStatement([NotNull] सृजनParser.InputStatementContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="सृजनParser.breakStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitBreakStatement([NotNull] सृजनParser.BreakStatementContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.continueStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitContinueStatement([NotNull] सृजनParser.ContinueStatementContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.returnStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitReturnStatement([NotNull] सृजनParser.ReturnStatementContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="सृजनParser.arrayDeclaration"/>.
 	/// </summary>
@@ -122,6 +140,24 @@ public interface IसृजनVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitComparisionOperator([NotNull] सृजनParser.ComparisionOperatorContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.logicalOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.bitwiseOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitBitwiseOperator([NotNull] सृजनParser.BitwiseOperatorContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.complementOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitComplementOperator([NotNull] सृजनParser.ComplementOperatorContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -139,6 +175,12 @@ public interface IसृजनVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitFunction([NotNull] सृजनParser.FunctionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="सृजनParser.functionCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionCall([NotNull] सृजनParser.FunctionCallContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="सृजनParser.functionName"/>.
 	/// </summary>

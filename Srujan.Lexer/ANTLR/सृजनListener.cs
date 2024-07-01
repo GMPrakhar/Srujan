@@ -221,6 +221,26 @@ public interface IसृजनListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitLogicalOperator([NotNull] सृजनParser.LogicalOperatorContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.bitwiseOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBitwiseOperator([NotNull] सृजनParser.BitwiseOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.bitwiseOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBitwiseOperator([NotNull] सृजनParser.BitwiseOperatorContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="सृजनParser.complementOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterComplementOperator([NotNull] सृजनParser.ComplementOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="सृजनParser.complementOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitComplementOperator([NotNull] सृजनParser.ComplementOperatorContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="सृजनParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

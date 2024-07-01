@@ -83,13 +83,17 @@ condition   : expression comparisionOperator expression (logicalOperator express
 
 comparisionOperator : '<' | '>' | '==' | '!=' | '>=' | '<=';
 logicalOperator : '&&' | '||';
+bitwiseOperator : '&' | '|' | '^' | '<<' | '>>';
+complementOperator : '~';
 
 expression  : term ((PLUS | MINUS) term)*
-            | expression comparisionOperator expression (logicalOperator expression comparisionOperator expression)*;
+            | expression comparisionOperator expression (logicalOperator expression comparisionOperator expression)*
+            | expression bitwiseOperator expression
+            | complementOperator expression;
 
 term        : factor ((MULTIPLY | DIVIDE | MOD) factor)*;
 
-function    : TYPE (functionName | MAIN) '(' (TYPE ID (',' TYPE ID)*)* ')' '{' statement+ '}';
+function    : TYPE (functionName | MAIN) '(' (ID ':' TYPE (',' ID ':' TYPE )*)* ')' '{' statement+ '}';
 
 functionCall : functionName '(' (expression (',' expression)*)? ')';
 
